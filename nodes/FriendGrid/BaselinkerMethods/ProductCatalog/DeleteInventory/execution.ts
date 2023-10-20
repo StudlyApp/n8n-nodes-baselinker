@@ -8,7 +8,7 @@ export async function deleteInventoryExecution(args: {
 }) {
 	return await makeBaselinkerRequest({
 		apiKey: args.apiKey,
-		methodName: 'DeleteInventory',
+		methodName: 'deleteInventory',
 		input: args.input
 	});
 }
