@@ -3,7 +3,7 @@ import {Category, ProductCatalogMethod} from "../../types";
 
 export const addInventoryWarehouseDefinition: INodeProperties[] = [
 	{
-		displayName: 'Warehouse ID',
+		displayName: 'Warehouse ID (Optional)',
 		name: 'warehouse_id',
 		type: 'number',
 		displayOptions: {
@@ -16,7 +16,7 @@ export const addInventoryWarehouseDefinition: INodeProperties[] = [
 				],
 			},
 		},
-		default:'',
+		default: 0,
 		placeholder: '206',
 		description:'ID of the warehouse',
 	},
@@ -46,6 +46,7 @@ export const addInventoryWarehouseDefinition: INodeProperties[] = [
 		typeOptions: {
 			rows: 2,
 		},
+		required: true,
 		displayOptions: {
 			show: {
 				category: [
@@ -64,6 +65,7 @@ export const addInventoryWarehouseDefinition: INodeProperties[] = [
 		displayName: 'Stock Edition',
 		name: 'stock_edition',
 		type: 'boolean',
+		required: true,
 		displayOptions: {
 			show: {
 				category: [

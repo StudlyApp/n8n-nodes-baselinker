@@ -17,7 +17,7 @@ export const deleteInventoryPriceGroupDefinition: INodeProperties[] = [
 				],
 			},
 		},
-		default:'',
+		default: 0,
 		placeholder: '105',
 		description:'Price group identifier',
 	},

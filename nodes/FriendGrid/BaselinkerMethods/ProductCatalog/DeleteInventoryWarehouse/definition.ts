@@ -17,7 +17,7 @@ export const deleteInventoryWarehouseDefinition: INodeProperties[] = [
 				],
 			},
 		},
-		default:'',
+		default: 0,
 		placeholder: '206',
 		description:'ID of the warehouse',
 	},
