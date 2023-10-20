@@ -3,7 +3,7 @@ import {Category, ProductCatalogMethod} from "../../types";
 
 export const addInventoryPriceGroupDefinition: INodeProperties[] = [
 	{
-		displayName: 'Price Group ID',
+		displayName: 'Price Group ID (Optional)',
 		name: 'price_group_id',
 		type: 'number',
 		displayOptions: {
@@ -16,7 +16,7 @@ export const addInventoryPriceGroupDefinition: INodeProperties[] = [
 				],
 			},
 		},
-		default:'',
+		default: 0,
 		placeholder: '105',
 		description:'Price group identifier',
 	},
@@ -24,6 +24,7 @@ export const addInventoryPriceGroupDefinition: INodeProperties[] = [
 		displayName: 'Name',
 		name: 'name',
 		type: 'string',
+		required: true,
 		displayOptions: {
 			show: {
 				category: [
@@ -34,7 +35,7 @@ export const addInventoryPriceGroupDefinition: INodeProperties[] = [
 				],
 			},
 		},
-		default:'Default',
+		default:'',
 		placeholder: 'USA',
 		description:'Name of the price group',
 	},
@@ -45,6 +46,7 @@ export const addInventoryPriceGroupDefinition: INodeProperties[] = [
 		typeOptions: {
 			rows: 2,
 		},
+		required: true,
 		displayOptions: {
 			show: {
 				category: [
