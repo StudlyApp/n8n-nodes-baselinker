@@ -3,7 +3,7 @@ import {Category, ProductCatalogMethod} from "../../types";
 
 export const addInventoryManufacturerDefinition: INodeProperties[] = [
 	{
-		displayName: 'Manufacturer ID',
+		displayName: 'Manufacturer ID (Optional)',
 		name: 'manufacturer_id',
 		type: 'number',
 		displayOptions: {
@@ -16,7 +16,7 @@ export const addInventoryManufacturerDefinition: INodeProperties[] = [
 				],
 			},
 		},
-		default:'',
+		default: 0,
 		placeholder: '8',
 		description:'Manufacturer ID provided in case of an update. Should be blank when creating a new manufacturer.',
 	},

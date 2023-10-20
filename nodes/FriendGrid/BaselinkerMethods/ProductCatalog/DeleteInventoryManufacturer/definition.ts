@@ -17,7 +17,7 @@ export const deleteInventoryManufacturerDefinition: INodeProperties[] = [
 				],
 			},
 		},
-		default:'',
+		default: 0,
 		placeholder: '8',
 		description:'The ID of the manufacturer removed from BaseLinker warehouse',
 	},

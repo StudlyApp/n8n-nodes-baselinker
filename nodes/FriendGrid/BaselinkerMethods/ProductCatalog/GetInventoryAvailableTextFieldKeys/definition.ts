@@ -17,7 +17,7 @@ export const getInventoryAvailableTextFieldKeysDefinition: INodeProperties[] = [
 				],
 			},
 		},
-		default:'',
+		default: 0,
 		placeholder: '307',
 		description:'Catalog ID. The list of identifiers can be retrieved by the getInventories method (inventory_id field).',
 	},

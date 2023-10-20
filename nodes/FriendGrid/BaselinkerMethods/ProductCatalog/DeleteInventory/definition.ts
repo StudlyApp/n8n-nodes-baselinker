@@ -17,7 +17,7 @@ export const deleteInventoryDefinition: INodeProperties[] = [
 				],
 			},
 		},
-		default:'',
+		default: 0,
 		placeholder: '307',
 		description:'Catalog ID. The list of identifiers can be retrieved using the method getInventories.',
 	},

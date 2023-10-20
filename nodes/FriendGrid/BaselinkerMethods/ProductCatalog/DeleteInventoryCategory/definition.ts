@@ -17,7 +17,7 @@ export const deleteInventoryCategoryDefinition: INodeProperties[] = [
 				],
 			},
 		},
-		default:'',
+		default: 0,
 		placeholder: '6',
 		description:'The number of the category to be removed in the BaseLinker storage',
 	},
