@@ -4,7 +4,7 @@ export async function getInventoryProductsStockExecution(args: {
 	apiKey: string;
 	input: {
 		"inventory_id": number,
-		"page"?: number,
+		"page"?: number | null,
 	};
 }) {
 	return await makeBaselinkerRequest({

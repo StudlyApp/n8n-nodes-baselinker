@@ -3,16 +3,25 @@ import {makeBaselinkerRequest} from "../../request.maker";
 export async function addInventoryProductExecution(args: {
 	apiKey: string;
 	input: {
-		"inventory_id"?: number,
-		"name": string,
-		"description": string,
-		"languages": Array< string | number >,
-		"default_language": string,
-		"price_groups": Array< string | number >,
-		"default_price_group": number,
-		"warehouses": Array< string | number >,
-		"default_warehouse": string,
-		"reservations": boolean,
+		"inventory_id": string,
+		"product_id"?: string,
+		"parent_id"?: string,
+		"is_bundle"?: boolean,
+		"ean"?: string,
+		"sku"?: string,
+		"tax_rate"?: number,
+		"weight"?: number,
+		"height"?: number,
+		"length"?: number,
+		"star"?: number,
+		"manufacturer_id"?: number,
+		"category_id"?: number,
+		"prices"?: null,
+		"stock"?: null,
+		"locations"?: null,
+		"text_fields"?: null,
+		"images"?: null,
+		"links"?: null,
 	};
 }) {
 	return await makeBaselinkerRequest({
