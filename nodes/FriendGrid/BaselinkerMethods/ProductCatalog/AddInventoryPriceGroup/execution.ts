@@ -3,9 +3,9 @@ import {makeBaselinkerRequest} from "../../request.maker";
 export async function addInventoryPriceGroupExecution(args: {
 	apiKey: string;
 	input: {
-		"price_group_id"?: number;
-		"name"?: string;
-		"description"?: string;
+		"price_group_id"?: number | null;
+		"name": string;
+		"description": string;
 		"currency": string;
 	};
 }) {
