@@ -390,19 +390,21 @@ export class FriendGrid implements INodeType {
 
 				if (operation === ProductCatalogMethod.AddInventoryWarehouse) {
 					const schema = zod.object({
-						warehouse_id: zod.number().optional(),
+						warehouse_id: zod.union([
+							zod.number(), zod.null()
+						]).optional(),
 						name: zod.string(),
-						description: zod.string().optional(),
-						stock_edition: zod.boolean().optional(),
+						description: zod.string(),
+						stock_edition: zod.boolean(),
 					});
 
 					const result = await addInventoryWarehouseExecution({
 						apiKey: apiKey,
 						input: schema.parse({
-							warehouse_id: this.getNodeParameter('warehouse_id', i) as number,
-							name: this.getNodeParameter('name', i) as string,
-							description: this.getNodeParameter('description', i) as string,
-							stock_edition: this.getNodeParameter('stock_edition', i) as boolean,
+							warehouse_id: this.getNodeParameter('warehouse_id', i),
+							name: this.getNodeParameter('name', i),
+							description: this.getNodeParameter('description', i),
+							stock_edition: this.getNodeParameter('stock_edition', i),
 						})
 					});
 
@@ -418,7 +420,7 @@ export class FriendGrid implements INodeType {
 					const result = await deleteInventoryWarehouseExecution({
 						apiKey: apiKey,
 						input: schema.parse({
-							warehouse_id: this.getNodeParameter('warehouse_id', i) as number,
+							warehouse_id: this.getNodeParameter('warehouse_id', i),
 						})
 					});
 
@@ -777,7 +779,6 @@ export class FriendGrid implements INodeType {
 					});
 
 					responseData.push(result);
-					continue;
 				}
 			}
 
