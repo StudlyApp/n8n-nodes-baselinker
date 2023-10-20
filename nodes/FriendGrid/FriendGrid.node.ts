@@ -86,6 +86,10 @@ import {getInventoryProductLogsDefinition} from "./BaselinkerMethods/ProductCata
 import {getInventoryProductLogsExecution} from "./BaselinkerMethods/ProductCatalog/GetInventoryProductLogs/execution";
 import {runProductMacroTriggerDefinition} from "./BaselinkerMethods/ProductCatalog/RunProductMacroTrigger/definition";
 import {runProductMacroTriggerExecution} from "./BaselinkerMethods/ProductCatalog/RunProductMacroTrigger/execution";
+import {
+	getInventoryProductsDataDefinition
+} from "./BaselinkerMethods/ProductCatalog/GetInventoryProductsData/definition";
+import {getInventoryProductsDataExecution} from "./BaselinkerMethods/ProductCatalog/GetInventoryProductsData/execution";
 
 
 export class FriendGrid implements INodeType {
@@ -254,6 +258,12 @@ export class FriendGrid implements INodeType {
 						action: 'Remove the product from catalog',
 					},
 					{
+						name: 'Get Inventory Products Data',
+						value: ProductCatalogMethod.GetInventoryProductsData,
+						description: 'The method allows you to retrieve detailed data for selected products from the BaseLinker catalogue',
+						action: 'Gets detailed data for selected products',
+					},
+					{
 						name: 'Get Inventory Products List',
 						value: ProductCatalogMethod.GetInventoryProductsList,
 						description: 'Catalog ID. The list of identifiers can be retrieved using the method getInventories.',
@@ -307,6 +317,7 @@ export class FriendGrid implements INodeType {
 			...getInventoryIntegrationsDefinition,
 			...getInventoryAvailableTextFieldKeysDefinition,
 			...deleteInventoryProductDefinition,
+			...getInventoryProductsDataDefinition,
 			...getInventoryProductsListDefinition,
 			...getInventoryProductsStockDefinition,
 			...getInventoryProductsPricesDefinition,
@@ -449,7 +460,6 @@ export class FriendGrid implements INodeType {
 					})
 
 					const schema = zod.object({
-						// inventory_id: zod.number().optional(),
 						inventory_id: zod.union([
 							zod.number(), zod.null()
 						]).optional(),
@@ -502,7 +512,7 @@ export class FriendGrid implements INodeType {
 					const result = await deleteInventoryExecution({
 						apiKey: apiKey,
 						input: schema.parse({
-							inventory_id: this.getNodeParameter('inventory_id', i) as number,
+							inventory_id: this.getNodeParameter('inventory_id', i),
 						})
 					});
 
@@ -521,8 +531,12 @@ export class FriendGrid implements INodeType {
 
 				if (operation === ProductCatalogMethod.AddInventoryCategory) {
 					const schema = zod.object({
-						inventory_id: zod.number().optional(),
-						category_id: zod.number().optional(),
+						inventory_id: zod.union([
+							zod.number(), zod.null()
+						]).optional(),
+						category_id: zod.union([
+							zod.number(), zod.null()
+						]).optional(),
 						name: zod.string(),
 						parent_id: zod.number(),
 					});
@@ -530,10 +544,10 @@ export class FriendGrid implements INodeType {
 					const result = await addInventoryCategoryExecution({
 						apiKey: apiKey,
 						input: schema.parse({
-							inventory_id: this.getNodeParameter('inventory_id', i), // popoprawiac to jutro
-							category_id: this.getNodeParameter('category_id', i) as number,
-							name: this.getNodeParameter('name', i) as string,
-							parent_id: this.getNodeParameter('parent_id', i) as number,
+							inventory_id: this.getNodeParameter('inventory_id', i),
+							category_id: this.getNodeParameter('category_id', i),
+							name: this.getNodeParameter('name', i),
+							parent_id: this.getNodeParameter('parent_id', i),
 						})
 					});
 
@@ -549,7 +563,7 @@ export class FriendGrid implements INodeType {
 					const result = await deleteInventoryCategoryExecution({
 						apiKey: apiKey,
 						input: schema.parse({
-							category_id: this.getNodeParameter('category_id', i) as number,
+							category_id: this.getNodeParameter('category_id', i),
 						})
 					});
 
@@ -559,13 +573,15 @@ export class FriendGrid implements INodeType {
 
 				if (operation === ProductCatalogMethod.GetInventoryCategories) {
 					const schema = zod.object({
-						inventory_id: zod.number().optional(),
+						inventory_id: zod.union([
+							zod.number(), zod.null()
+						]).optional(),
 					})
 
 					const result = await getInventoryCategoriesExecution({
 						apiKey: apiKey,
 						input: schema.parse({
-							inventory_id: this.getNodeParameter('inventory_id', i) as number,
+							inventory_id: this.getNodeParameter('inventory_id', i),
 						})
 					});
 
@@ -575,15 +591,17 @@ export class FriendGrid implements INodeType {
 
 				if (operation === ProductCatalogMethod.AddInventoryManufacturer) {
 					const schema = zod.object({
-						manufacturer_id: zod.number().optional(),
+						manufacturer_id: zod.union([
+							zod.number(), zod.null()
+						]).optional(),
 						name: zod.string(),
 					});
 
 					const result = await addInventoryManufacturerExecution({
 						apiKey: apiKey,
 						input: schema.parse({
-							manufacturer_id: this.getNodeParameter('manufacturer_id', i) as number,
-							name: this.getNodeParameter('name', i) as string,
+							manufacturer_id: this.getNodeParameter('manufacturer_id', i),
+							name: this.getNodeParameter('name', i),
 						})
 					});
 
@@ -599,7 +617,7 @@ export class FriendGrid implements INodeType {
 					const result = await deleteInventoryManufacturerExecution({
 						apiKey: apiKey,
 						input: schema.parse({
-							manufacturer_id: this.getNodeParameter('manufacturer_id', i) as number,
+							manufacturer_id: this.getNodeParameter('manufacturer_id', i),
 						})
 					});
 
@@ -633,7 +651,7 @@ export class FriendGrid implements INodeType {
 					const result = await getInventoryIntegrationsExecution({
 						apiKey: apiKey,
 						input: schema.parse({
-							inventory_id: this.getNodeParameter('inventory_id', i) as number,
+							inventory_id: this.getNodeParameter('inventory_id', i),
 						})
 					});
 
@@ -649,13 +667,15 @@ export class FriendGrid implements INodeType {
 					const result = await getInventoryAvailableTextFieldKeysExecution({
 						apiKey: apiKey,
 						input: schema.parse({
-							inventory_id: this.getNodeParameter('inventory_id', i) as number,
+							inventory_id: this.getNodeParameter('inventory_id', i),
 						})
 					});
 
 					responseData.push(result);
 					continue;
 				}
+
+				// addInventoryProduct
 
 				if (operation === ProductCatalogMethod.DeleteInventoryProduct) {
 					const schema = zod.object({
@@ -665,7 +685,7 @@ export class FriendGrid implements INodeType {
 					const result = await deleteInventoryProductExecution({
 						apiKey: apiKey,
 						input: schema.parse({
-							product_id: this.getNodeParameter('product_id', i) as number,
+							product_id: this.getNodeParameter('product_id', i),
 						})
 					});
 
@@ -673,20 +693,71 @@ export class FriendGrid implements INodeType {
 					continue;
 				}
 
-				// tu nie parsujemy blad?
+				if (operation === ProductCatalogMethod.GetInventoryProductsData) {
+					const metadataArraySchema = zod.array(zod.object({
+						value: zod.union([
+							zod.string(), zod.number()
+						])
+					}))
+
+					const metadataObjectSchema = zod.object({
+						metadataValues: metadataArraySchema.optional(),
+					})
+
+					const schema = zod.object({
+						inventory_id: zod.number(),
+						products: zod.array(zod.number()),
+					})
+
+					const products = metadataObjectSchema.parse(this.getNodeParameter('products', i)).metadataValues?.map(el => el.value);
+
+					const result = await getInventoryProductsDataExecution({
+						apiKey: apiKey,
+						input: schema.parse({
+							inventory_id: this.getNodeParameter('inventory_id', i),
+							products,
+						})
+					});
+
+					responseData.push(result);
+					continue;
+				}
+
 				if (operation === ProductCatalogMethod.GetInventoryProductsList) {
 					const schema = zod.object({
-						filter_id: zod.number().optional(),
-						filter_category_id: zod.number().optional(),
-						filter_ean: zod.string().optional(),
-						filter_sku: zod.string().optional(),
-						filter_name: zod.string().optional(),
-						filter_price_from: zod.number().optional(),
-						filter_price_to: zod.number().optional(),
-						filter_stock_from: zod.number().optional(),
-						filter_stock_to: zod.number().optional(),
-						page: zod.number().optional(),
-						filter_sort: zod.string().optional(),
+						filter_id: zod.union([
+							zod.number(), zod.null()
+						]).optional(),
+						filter_category_id: zod.union([
+							zod.number(), zod.null()
+						]).optional(),
+						filter_ean: zod.union([
+							zod.string(), zod.null()
+						]).optional(),
+						filter_sku: zod.union([
+							zod.string(), zod.null()
+						]).optional(),
+						filter_name: zod.union([
+							zod.string(), zod.null()
+						]).optional(),
+						filter_price_from: zod.union([
+							zod.number(), zod.null()
+						]).optional(),
+						filter_price_to: zod.union([
+							zod.number(), zod.null()
+						]).optional(),
+						filter_stock_from: zod.union([
+							zod.number(), zod.null()
+						]).optional(),
+						filter_stock_to: zod.union([
+							zod.number(), zod.null()
+						]).optional(),
+						page: zod.union([
+							zod.number(), zod.null()
+						]).optional(),
+						filter_sort: zod.union([
+							zod.string(), zod.null()
+						]).optional(),
 					});
 
 					const additionalFields = this.getNodeParameter("additionalFields", i);
@@ -705,7 +776,9 @@ export class FriendGrid implements INodeType {
 
 				if (operation === ProductCatalogMethod.GetInventoryProductsStock) {
 					const schema = zod.object({
-						page: zod.number().optional(),
+						page: zod.union([
+							zod.number(), zod.null()
+						]).optional(),
 					});
 
 					const additionalFields = this.getNodeParameter("additionalFields", i);
@@ -721,6 +794,8 @@ export class FriendGrid implements INodeType {
 					responseData.push(result);
 					continue;
 				}
+
+				// updateInventoryProductsStock
 
 				if (operation === ProductCatalogMethod.GetInventoryProductsPrices) {
 					const schema = zod.object({
