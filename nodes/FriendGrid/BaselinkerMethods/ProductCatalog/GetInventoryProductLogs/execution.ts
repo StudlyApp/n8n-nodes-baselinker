@@ -4,11 +4,11 @@ export async function getInventoryProductLogsExecution(args: {
 	apiKey: string;
 	input: {
 		"product_id": number,
-		"date_from"?: number,
-		"date_to"?: number,
-		"log_type"?: number,
-		"sort"?: number,
-		"page"?: number,
+		"date_from"?: number | null,
+		"date_to"?: number | null,
+		"log_type"?: number | null,
+		"sort"?: number | null,
+		"page"?: number | null,
 	};
 }) {
 	return await makeBaselinkerRequest({
