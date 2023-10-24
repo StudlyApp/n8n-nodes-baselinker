@@ -17,7 +17,7 @@ export const getInventoryProductsPricesDefinition: INodeProperties[] = [
 				],
 			},
 		},
-		default:'',
+		default: 0,
 		placeholder: '307',
 		description:'Catalog ID. The list of identifiers can be retrieved using the method getInventories.',
 	},
@@ -39,10 +39,10 @@ export const getInventoryProductsPricesDefinition: INodeProperties[] = [
 		},
 		options: [
 			{
-				displayName: 'Page',
+				displayName: 'Page (Optional)',
 				name: 'page',
 				type: 'number',
-				default: '',
+				default: 0,
 				placeholder: '',
 				description: '(optional) Results paging (1000 products per page for BaseLinker warehouse)',
 			},
