@@ -90,6 +90,17 @@ import {
 	getInventoryProductsDataDefinition
 } from "./BaselinkerMethods/ProductCatalog/GetInventoryProductsData/definition";
 import {getInventoryProductsDataExecution} from "./BaselinkerMethods/ProductCatalog/GetInventoryProductsData/execution";
+import {addInventoryProductDefinition} from "./BaselinkerMethods/ProductCatalog/AddInventoryProduct/definition";
+import {
+	updateInventoryProductsStockDefinition
+} from "./BaselinkerMethods/ProductCatalog/UpdateInventoryProductsStock/definition";
+import {
+	updateInventoryProductsStockExecution
+} from "./BaselinkerMethods/ProductCatalog/UpdateInventoryProductsStock/execution";
+import {
+	updateInventoryProductsPricesDefinition
+} from "./BaselinkerMethods/ProductCatalog/UpdateInventoryProductsPrices/definition";
+import {addInventoryProductExecution} from "./BaselinkerMethods/ProductCatalog/AddInventoryProduct/execution";
 
 
 export class FriendGrid implements INodeType {
@@ -252,6 +263,12 @@ export class FriendGrid implements INodeType {
 						action: 'Gets list of product text fields',
 					},
 					{
+						name: 'Add Inventory Product',
+						value: ProductCatalogMethod.AddInventoryProduct,
+						description: 'The method allows you to add a new product to BaseLinker catalog. Entering the product with the ID updates previously saved product.',
+						action: 'Add a new product to catalog',
+					},
+					{
 						name: 'Delete Inventory Product',
 						value: ProductCatalogMethod.DeleteInventoryProduct,
 						description: 'The method allows you to remove the product from BaseLinker catalog',
@@ -276,10 +293,22 @@ export class FriendGrid implements INodeType {
 						action: 'Gets stock data of products from catalogs',
 					},
 					{
+						name: 'Update Inventory Products Stock',
+						value: ProductCatalogMethod.UpdateInventoryProductsStock,
+						description: 'The method allows to update stocks of products (and/or their variants) in BaseLinker catalog. Maximum 1000 products at a time.',
+						action: 'Update stocks of products in catalog',
+					},
+					{
 						name: 'Get Inventory Products Prices',
 						value: ProductCatalogMethod.GetInventoryProductsPrices,
 						description: 'The method allows to retrieve the gross prices of products from BaseLinker catalogues',
 						action: 'Gets the gross prices of products from catalogs',
+					},
+					{
+						name: 'Update Inventory Products Prices',
+						value: ProductCatalogMethod.UpdateInventoryProductsPrices,
+						description: 'The method allows bulk update of gross prices of products (and/or their variants) in the BaseLinker catalog. Maximum 1000 products at a time.',
+						action: 'Update of gross prices of products',
 					},
 					{
 						name: 'Get Inventory Product Logs',
@@ -316,11 +345,14 @@ export class FriendGrid implements INodeType {
 			...getInventoryExtraFieldsDefinition,
 			...getInventoryIntegrationsDefinition,
 			...getInventoryAvailableTextFieldKeysDefinition,
+			...addInventoryProductDefinition,
 			...deleteInventoryProductDefinition,
 			...getInventoryProductsDataDefinition,
 			...getInventoryProductsListDefinition,
 			...getInventoryProductsStockDefinition,
+			...updateInventoryProductsStockDefinition,
 			...getInventoryProductsPricesDefinition,
+			...updateInventoryProductsPricesDefinition,
 			...getInventoryProductLogsDefinition,
 			...runProductMacroTriggerDefinition,
 			// External storages
@@ -675,7 +707,220 @@ export class FriendGrid implements INodeType {
 					continue;
 				}
 
-				// addInventoryProduct
+				if (operation === ProductCatalogMethod.AddInventoryProduct) {
+					const metadataArraySchema = zod.array(zod.object({
+						name: zod.string(),
+						value: zod.union([
+							zod.string(),
+							zod.number(),
+						])
+					}))
+
+					const metadataObjectSchema = zod.object({
+						metadataValues: metadataArraySchema,
+					})
+
+					const metadataArraySchemaForLinks = zod.array(zod.object({
+						name: zod.string(),
+						value: zod.object({
+							metadataValues: zod.object({
+								product_id: zod.number(),
+								variant_id: zod.number()
+							}).transform(item => {
+								return {
+									['product_id']: item.product_id,
+									['variant_id']: item.variant_id
+								}
+							})
+						})
+					}))
+
+					const metadataObjectSchemaForLinks = zod.object({
+						metadataValues: metadataArraySchemaForLinks,
+					})
+
+
+					const schema = zod.object({
+						inventory_id: zod.string(),
+						product_id: zod.union([
+							zod.string(), zod.null()
+						]).optional(),
+						parent_id: zod.union([
+							zod.string(), zod.null()
+						]).optional(),
+						is_bundle: zod.union([
+							zod.boolean(), zod.null()
+						]).optional(),
+						ean: zod.union([
+							zod.string(), zod.null()
+						]).optional(),
+						sku: zod.union([
+							zod.string(), zod.null()
+						]).optional(),
+						tax_rate: zod.union([
+							zod.number(), zod.null()
+						]).optional(),
+						weight: zod.union([
+							zod.number(), zod.null()
+						]).optional(),
+						height: zod.union([
+							zod.number(), zod.null()
+						]).optional(),
+						width: zod.union([
+							zod.number(), zod.null()
+						]).optional(),
+						length: zod.union([
+							zod.number(), zod.null()
+						]).optional(),
+						star: zod.union([
+							zod.number(), zod.null()
+						]).optional(),
+						manufacturer_id: zod.union([
+							zod.number(), zod.null()
+						]).optional(),
+						category_id: zod.union([
+							zod.number(), zod.null()
+						]).optional(),
+						prices: zod.union([
+							zod.record(zod.string(), zod.number()), zod.null()
+						]).optional(),
+						stock: zod.union([
+							zod.record(zod.string(), zod.number()), zod.null()
+						]).optional(),
+						locations: zod.union([
+							zod.record(zod.string(), zod.string()), zod.null()
+						]).optional(),
+						text_fields: zod.union([
+							zod.record(zod.string(), zod.union([
+								zod.string(),
+								zod.record(zod.string(), zod.string())
+							])), zod.null()
+						]).optional(),
+						images: zod.union([
+							zod.record(zod.string(), zod.string()), zod.null()
+						]).optional(),
+						links: zod.union([
+							zod.record(zod.string(), zod.record(zod.string(), zod.number())), zod.null()
+						]).optional(),
+						bundle_products: zod.union([
+                zod.record(zod.string(), zod.string()), zod.null()
+            ]).optional()
+					})
+
+					const additionalFields = this.getNodeParameter('additionalFields', i);
+
+					let preparedObjectForPrices = undefined;
+					let preparedObjectForStock = undefined;
+					let preparedObjectForLocations = undefined;
+					let preparedObjectForTextFields = undefined;
+					let preparedObjectForTextFieldFeatures = undefined;
+					let preparedObjectForImages = undefined;
+					let preparedObjectForLinks = undefined;
+					let preparedObjectForBundleProducts = undefined;
+
+					if (additionalFields.prices !== undefined) {
+						preparedObjectForPrices = metadataObjectSchema.parse(additionalFields.prices).metadataValues?.reduce((prev: { [x: string]: string | number; }, curr: { name: string; value: string | number; }) => {
+							prev[curr.name] = curr.value
+							return prev;
+						}, {})
+					}
+					if (additionalFields.stock !== undefined) {
+						preparedObjectForStock = metadataObjectSchema.parse(additionalFields.stock).metadataValues?.reduce((prev: { [x: string]: string | number; }, curr: { name: string; value: string | number; }) => {
+							prev[curr.name] = curr.value
+							return prev;
+						}, {})
+					}
+					if (additionalFields.locations !== undefined) {
+						preparedObjectForLocations = metadataObjectSchema.parse(additionalFields.locations).metadataValues?.reduce((prev: { [x: string]: string | number; }, curr: { name: string; value: string | number; }) => {
+							prev[curr.name] = curr.value
+							return prev;
+						}, {})
+					}
+					if (additionalFields.text_fields !== undefined) {
+						preparedObjectForTextFields = metadataObjectSchema.parse(additionalFields.text_fields).metadataValues?.reduce((prev: { [x: string]: string | number; }, curr: { name: string; value: string | number; }) => {
+							prev[curr.name] = curr.value
+							return prev;
+						}, {})
+					}
+					if (additionalFields.text_field_features !== undefined) {
+						preparedObjectForTextFieldFeatures = metadataObjectSchema.parse(additionalFields.text_field_features).metadataValues?.reduce((prev: { [x: string]: string | number; }, curr: { name: string; value: string | number; }) => {
+							prev[curr.name] = curr.value
+							return prev;
+						}, {})
+					}
+					if (additionalFields.images !== undefined) {
+						let preparedArrayForImages = metadataObjectSchema.parse(additionalFields.images).metadataValues.map(item => {
+							if (typeof item.value === 'string') {
+								if (item.value.startsWith('http')) {
+									item.value = `url:${item.value}`;
+								}
+							}
+							return item;
+						});
+
+						preparedObjectForImages = preparedArrayForImages?.reduce((prev: { [x: string]: string | number; }, curr: { name: string; value: string | number; }) => {
+							prev[curr.name] = curr.value
+							return prev;
+						}, {})
+					}
+					if (additionalFields.links !== undefined) {
+						preparedObjectForLinks = metadataObjectSchemaForLinks.parse(additionalFields.links).metadataValues?.reduce((prev, curr) => {
+							prev[curr.name] = curr.value.metadataValues
+							return prev;
+						}, {} as Record<string, { [key: string]: number | undefined }>)
+					}
+
+					let text_fields = undefined;
+					if (preparedObjectForTextFields !== undefined && preparedObjectForTextFieldFeatures !== undefined) {
+						text_fields = {
+							...preparedObjectForTextFields,
+							...preparedObjectForTextFieldFeatures
+						}
+					} else if (preparedObjectForTextFields !== undefined) {
+						text_fields = {
+							...preparedObjectForTextFields
+						}
+					}
+
+					if (additionalFields.is_bundle) {
+              if (additionalFields.bundle_products !== undefined) {
+                  preparedObjectForBundleProducts = metadataObjectSchema.parse(additionalFields.bundle_products).metadataValues?.reduce((prev: { [x: string]: string | number; }, curr: { name: string; value: string | number; }) => {
+                      prev[curr.name] = curr.value
+                      return prev;
+                  }, {})
+              }
+					}
+
+					const result = await addInventoryProductExecution({
+						apiKey: apiKey,
+						input: schema.parse({
+							inventory_id: this.getNodeParameter('inventory_id', i),
+							product_id: additionalFields.product_id,
+							parent_id: additionalFields.parent_id,
+							is_bundle: additionalFields.is_bundle,
+							ean:  additionalFields.ean,
+							sku: additionalFields.sku,
+							tax_rate: additionalFields.tax_rate,
+							weight: additionalFields.weight,
+							height: additionalFields.height,
+							width: additionalFields.width,
+							length: additionalFields.length,
+							star: additionalFields.star,
+							manufacturer_id: additionalFields.manufacture_id,
+							category_id: additionalFields.category_id,
+							prices: preparedObjectForPrices,
+							stock: preparedObjectForStock,
+							locations: preparedObjectForLocations,
+							text_fields: text_fields,
+							images: preparedObjectForImages,
+							links: preparedObjectForLinks,
+							bundle_products: preparedObjectForBundleProducts,
+						})
+					});
+
+					responseData.push(result);
+					continue;
+				}
 
 				if (operation === ProductCatalogMethod.DeleteInventoryProduct) {
 					const schema = zod.object({
@@ -795,11 +1040,59 @@ export class FriendGrid implements INodeType {
 					continue;
 				}
 
-				// updateInventoryProductsStock
+				if (operation === ProductCatalogMethod.UpdateInventoryProductsStock) {
+					const metadataArraySchemaForProducts = zod.array(zod.object({
+						name: zod.string(),
+						value: zod.object({
+							metadataValues: zod.object({
+								warehouse_id: zod.string(),
+								stock: zod.number()
+							}).transform(item => {
+								return {
+									[item.warehouse_id]: item.stock
+								}
+							})
+						})
+					}))
+
+					const metadataObjectSchemaForProductsStock = zod.object({
+						metadataValues: metadataArraySchemaForProducts,
+					})
+
+					const schema = zod.object({
+						inventory_id: zod.string(),
+						products: zod.record(
+							zod.string(),
+							zod.record(zod.string(), zod.number())
+						)
+					})
+
+					let preparedObjectForProducts = undefined;
+					const products = this.getNodeParameter('products', i);
+					if (products !== undefined) {
+						preparedObjectForProducts = metadataObjectSchemaForProductsStock.parse(products).metadataValues?.reduce((prev, curr) => {
+							prev[curr.name] = curr.value.metadataValues
+							return prev;
+						}, {} as Record<string, { [key: string]: number | undefined }>)
+					}
+
+					const result = await updateInventoryProductsStockExecution({
+						apiKey: apiKey,
+						input: schema.parse({
+							inventory_id: this.getNodeParameter('inventory_id', i)?.toString(),
+							products: preparedObjectForProducts,
+						})
+					});
+
+					responseData.push(result);
+					continue;
+				}
 
 				if (operation === ProductCatalogMethod.GetInventoryProductsPrices) {
 					const schema = zod.object({
-						page: zod.number().optional(),
+						page: zod.union([
+							zod.number(), zod.null()
+						]).optional(),
 					});
 
 					const additionalFields = this.getNodeParameter("additionalFields", i);
@@ -816,13 +1109,71 @@ export class FriendGrid implements INodeType {
 					continue;
 				}
 
+				if (operation === ProductCatalogMethod.UpdateInventoryProductsPrices) {
+					const metadataArraySchemaForProducts = zod.array(zod.object({
+						name: zod.string(),
+						value: zod.object({
+							metadataValues: zod.object({
+								price_group_id: zod.string(),
+								price: zod.number()
+							}).transform(item => {
+								return {
+									[item.price_group_id]: item.price
+								}
+							})
+						})
+					}))
+
+					const metadataObjectSchemaForProductsPrices = zod.object({
+						metadataValues: metadataArraySchemaForProducts,
+					})
+
+					const schema = zod.object({
+						inventory_id: zod.string(),
+						products: zod.record(
+							zod.string(),
+							zod.record(zod.string(), zod.number())
+						)
+					})
+
+					let preparedObjectForProducts = undefined;
+					const products = this.getNodeParameter('products', i);
+					if (products !== undefined) {
+						preparedObjectForProducts = metadataObjectSchemaForProductsPrices.parse(products).metadataValues?.reduce((prev, curr) => {
+							prev[curr.name] = curr.value.metadataValues
+							return prev;
+						}, {} as Record<string, { [key: string]: number | undefined }>)
+					}
+
+					const result = await updateInventoryProductsStockExecution({
+						apiKey: apiKey,
+						input: schema.parse({
+							inventory_id: this.getNodeParameter('inventory_id', i)?.toString(),
+							products: preparedObjectForProducts,
+						})
+					});
+
+					responseData.push(result);
+					continue;
+				}
+
 				if (operation === ProductCatalogMethod.GetInventoryProductLogs) {
 					const schema = zod.object({
-						date_from: zod.number().optional(),
-						date_to: zod.number().optional(),
-						log_type: zod.number().optional(),
-						sort: zod.number().optional(),
-						page: zod.number().optional(),
+						date_from: zod.union([
+							zod.number(), zod.null()
+						]).optional(),
+						date_to: zod.union([
+							zod.number(), zod.null()
+						]).optional(),
+						log_type: zod.union([
+							zod.number(), zod.null()
+						]).optional(),
+						sort: zod.union([
+							zod.number(), zod.null()
+						]).optional(),
+						page: zod.union([
+							zod.number(), zod.null()
+						]).optional(),
 					});
 
 					const additionalFields = this.getNodeParameter("additionalFields", i);
@@ -848,8 +1199,8 @@ export class FriendGrid implements INodeType {
 					const result = await runProductMacroTriggerExecution({
 						apiKey: apiKey,
 						input: schema.parse({
-							product_id: this.getNodeParameter('product_id', i) as number,
-							trigger_id: this.getNodeParameter('product_id', i) as number,
+							product_id: this.getNodeParameter('product_id', i),
+							trigger_id: this.getNodeParameter('product_id', i),
 						})
 					});
 
