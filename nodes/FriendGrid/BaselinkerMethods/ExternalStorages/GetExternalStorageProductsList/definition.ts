@@ -53,61 +53,86 @@ export const getExternalStorageProductsListDefinition: INodeProperties[] = [
 				placeholder: '"ID [ASC|DESC]", "name [ASC|DESC]"...',
 				description: '(optional) the value for sorting the product list. Possible values: "ID [ASC|DESC]", "name [ASC|DESC]", "quantity [ASC|DESC]", "price [ASC|DESC]".',
 			},
-
-
-
-
 			{
-				displayName: 'Filter Sort (Optional)',
-				name: 'filter_sort',
+				displayName: 'Filter ID (Optional)',
+				name: 'filter_id',
+				type: 'string',
+				default:'',
+				placeholder: '2546',
+				description: '(optional) limiting results to a specific product ID',
+			},
+			{
+				displayName: 'Filter EAN (Optional)',
+				name: 'filter_ean',
+				type: 'string',
+				default:'',
+				placeholder: '63576363463',
+				description: '(optional) limiting results to a specific ean',
+			},
+			{
+				displayName: 'Filter SKU (Optional)',
+				name: 'filter_sku',
+				type: 'string',
+				default:'',
+				placeholder: 'PL53F',
+				description: '(optional) limiting the results to a specific SKU (stock keeping number)',
+			},
+			{
+				displayName: 'Filter Name (Optional)',
+				name: 'filter_name',
+				type: 'string',
+				default:'',
+				placeholder: 'Nike PL35 shoes',
+				description: '(optional) item name filter (part of the searched name or an empty field)',
+			},
+			{
+				displayName: 'Filter Price From (Optional)',
+				name: 'filter_price_from',
 				type: 'number',
 				typeOptions: {
 					numberPrecision: 2,
 				},
 				default: 0,
-				placeholder: '23',
-				description:'VAT tax rate (e.g. "20")',
+				description:'(optional) minimum price limit (not displaying products with lower price)',
 			},
-
 			{
-				displayName: 'Prices',
-				name: 'prices',
-				placeholder: 'Add Price',
-				type: 'fixedCollection',
-				default: {},
+				displayName: 'Filter Price To (Optional)',
+				name: 'filter_price_to',
+				type: 'number',
 				typeOptions: {
-					multipleValues: true,
+					numberPrecision: 2,
 				},
-				description: 'A list containing product prices, where the key is the price group ID and value is a product gross price for a given price group. The list of price groups can be retrieved with getInventoryPriceGroups method.',
-				options: [
-					{
-						name: 'metadataValues',
-						displayName: 'Metadata',
-						values: [
-							{
-								displayName: 'Price Group ID',
-								name: 'name',
-								type: 'string',
-								default: '',
-								description: 'ID of the Price Group',
-								placeholder: '105'
-							},
-							{
-								displayName: 'Price Value',
-								name: 'value',
-								type: 'number',
-								typeOptions: {
-									numberPrecision: 2,
-								},
-								default: 0,
-								description: 'Value to set for the Price Group ID',
-								placeholder: '20.99'
-							},
-						],
-					},
-				],
+				default: 0,
+				description:'(optional) maximum price limit',
 			},
-
+			{
+				displayName: 'Filter Quantity From (Optional)',
+				name: 'filter_quantity_from',
+				type: 'number',
+				default: 0,
+				description:'(optional) minimum quantity limit',
+			},
+			{
+				displayName: 'Filter Quantity To (Optional)',
+				name: 'filter_quantity_to',
+				type: 'number',
+				default: 0,
+				description:'(optional) maximum quantity limit',
+			},
+			{
+				displayName: 'Filter Available (Optional)',
+				name: 'filter_available',
+				type: 'number',
+				default: 0,
+				description: '(optional) displaying only products marked as available (value 1) or not available (0) or all (empty value)',
+			},
+			{
+				displayName: 'Page (Optional)',
+				name: 'page',
+				type: 'number',
+				default: 0,
+				description: '(NEW) (optional) Paging results',
+			},
 		],
 	},
 ];
