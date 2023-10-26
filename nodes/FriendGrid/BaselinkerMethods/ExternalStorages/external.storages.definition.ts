@@ -4,6 +4,10 @@ import {Category, ExternalStoragesMethod} from "../types";
 import {getExternalStoragesListDefinition} from "./GetExternalStoragesList/definition";
 import {getExternalStorageCategoriesDefinition} from "./GetExternalStorageCategories/definition";
 import {getExternalStorageProductsDataDefinition} from "./GetExternalStorageProductsData/definition";
+import {getExternalStorageProductsListDefinition} from "./GetExternalStorageProductsList/definition";
+import {getExternalStorageProductsQuantityDefinition} from "./GetExternalStorageProductsQuantity/definition";
+import {getExternalStorageProductsPricesDefinition} from "./GetExternalStorageProductsPrices/definition";
+import {updateExternalStorageProductsQuantityDefinition} from "./UpdateExternalStorageProductsQuantity/definition";
 
 export const externalStoragesDefinition: INodeProperties[] = [
 	{
@@ -37,6 +41,30 @@ export const externalStoragesDefinition: INodeProperties[] = [
 				description: 'The method allows to retrieve detailed data of selected products from an external storage (shop/wholesaler) connected to BaseLinker',
 				action: 'Get detailed data of selected products from an external storage',
 			},
+			{
+				name: 'Get External Storage Products List',
+				value: ExternalStoragesMethod.GetExternalStorageProductsList,
+				description: 'The method allows to retrieve detailed data of selected products from an external storage (shop/wholesaler) connected to BaseLinker',
+				action: 'Get filtered data of products from an external storage',
+			},
+			{
+				name: 'Get External Storage Products Quantity',
+				value: ExternalStoragesMethod.GetExternalStorageProductsQuantity,
+				description: 'The method allows to retrieve stock from an external storage (shop/wholesaler) connected to BaseLinker',
+				action: 'Get stock of products from an external storage',
+			},
+			{
+				name: 'Get External Storage Products Prices',
+				value: ExternalStoragesMethod.GetExternalStorageProductsPrices,
+				description: 'The method allows to retrieve product prices from an external storage (shop/wholesaler) connected to BaseLinker',
+				action: 'Get prices of products from an external storage',
+			},
+			{
+				name: 'Update External Storage Products Quantity',
+				value: ExternalStoragesMethod.UpdateExternalStorageProductsQuantity,
+				description: 'The method allows to bulk update the product stock (and/or variants) in an external storage (shop/wholesaler) connected to BaseLinker. Maximum 1000 products at a time.',
+				action: 'Update the product stock in an external storage',
+			},
 		],
 		default: ExternalStoragesMethod.GetExternalStorageProductsList.toString(),
 		noDataExpression: true,
@@ -44,4 +72,8 @@ export const externalStoragesDefinition: INodeProperties[] = [
 	...getExternalStoragesListDefinition,
 	...getExternalStorageCategoriesDefinition,
 	...getExternalStorageProductsDataDefinition,
+	...getExternalStorageProductsListDefinition,
+	...getExternalStorageProductsQuantityDefinition,
+	...getExternalStorageProductsPricesDefinition,
+	...updateExternalStorageProductsQuantityDefinition,
 ];
