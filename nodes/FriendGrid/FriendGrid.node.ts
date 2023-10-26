@@ -8,6 +8,8 @@ import {productCatalogDefinition} from "./BaselinkerMethods/ProductCatalog/produ
 import {productCatalogExecution} from "./BaselinkerMethods/ProductCatalog/product.catalog.execution";
 import {externalStoragesDefinition} from "./BaselinkerMethods/ExternalStorages/external.storages.definition";
 import {externalStoragesExecution} from "./BaselinkerMethods/ExternalStorages/external.storages.execution";
+import {ordersDefinition} from "./BaselinkerMethods/Orders/orders.definition";
+import {ordersExecution} from "./BaselinkerMethods/Orders/orders.execution";
 
 
 export class FriendGrid implements INodeType {
@@ -45,6 +47,10 @@ export class FriendGrid implements INodeType {
 					{
 						name: 'External Storages',
 						value: Category.ExternalStorages,
+					},
+					{
+						name: 'Orders',
+						value: Category.Orders,
 					}
 				],
 				default: Category.ProductCatalog.toString(),
@@ -57,7 +63,7 @@ export class FriendGrid implements INodeType {
 			// External storages
 			...externalStoragesDefinition,
 			// Orders
-
+			...ordersDefinition,
 			// Courier shipments
 
 		],
@@ -88,6 +94,12 @@ export class FriendGrid implements INodeType {
 			// All operation for External Storages category
 			if (category === Category.ExternalStorages) {
 				const result = await externalStoragesExecution(this, apiKey, operation, category, i);
+				responseData.push(result);
+				continue;
+			}
+			// All operation for Orders category
+			if (category === Category.Orders) {
+				const result = await ordersExecution(this, apiKey, operation, category, i);
 				responseData.push(result);
 				// continue;
 			}
