@@ -55,7 +55,6 @@ export async function productCatalogExecution(
 				currency: data.getNodeParameter('currency', i),
 			})
 		});
-
 	}
 
 	if (operation === ProductCatalogMethod.DeleteInventoryPriceGroup) {
@@ -69,14 +68,12 @@ export async function productCatalogExecution(
 				price_group_id: data.getNodeParameter('price_group_id', i),
 			})
 		});
-
 	}
 
 	if (operation === ProductCatalogMethod.GetInventoryPriceGroups) {
 		return await getInventoryPriceGroupsExecution({
 			apiKey: apiKey
 		});
-
 	}
 
 	if (operation === ProductCatalogMethod.AddInventoryWarehouse) {
@@ -98,7 +95,6 @@ export async function productCatalogExecution(
 				stock_edition: data.getNodeParameter('stock_edition', i),
 			})
 		});
-
 	}
 
 	if (operation === ProductCatalogMethod.DeleteInventoryWarehouse) {
@@ -112,14 +108,12 @@ export async function productCatalogExecution(
 				warehouse_id: data.getNodeParameter('warehouse_id', i),
 			})
 		});
-
 	}
 
 	if (operation === ProductCatalogMethod.GetInventoryWarehouses) {
 		return await getInventoryWarehousesExecution({
 			apiKey: apiKey
 		});
-
 	}
 
 	if (operation === ProductCatalogMethod.AddInventory) {
@@ -173,7 +167,6 @@ export async function productCatalogExecution(
 				reservations: data.getNodeParameter('reservations', i),
 			})
 		});
-
 	}
 
 	if (operation === ProductCatalogMethod.DeleteInventory) {
@@ -187,14 +180,12 @@ export async function productCatalogExecution(
 				inventory_id: data.getNodeParameter('inventory_id', i),
 			})
 		});
-
 	}
 
 	if (operation === ProductCatalogMethod.GetInventories) {
 		return await getInventoriesExecution({
 			apiKey: apiKey
 		});
-
 	}
 
 	if (operation === ProductCatalogMethod.AddInventoryCategory) {
@@ -218,7 +209,6 @@ export async function productCatalogExecution(
 				parent_id: data.getNodeParameter('parent_id', i),
 			})
 		});
-
 	}
 
 	if (operation === ProductCatalogMethod.DeleteInventoryCategory) {
@@ -232,7 +222,6 @@ export async function productCatalogExecution(
 				category_id: data.getNodeParameter('category_id', i),
 			})
 		});
-
 	}
 
 	if (operation === ProductCatalogMethod.GetInventoryCategories) {
@@ -248,7 +237,6 @@ export async function productCatalogExecution(
 				inventory_id: data.getNodeParameter('inventory_id', i),
 			})
 		});
-
 	}
 
 	if (operation === ProductCatalogMethod.AddInventoryManufacturer) {
@@ -266,7 +254,6 @@ export async function productCatalogExecution(
 				name: data.getNodeParameter('name', i),
 			})
 		});
-
 	}
 
 	if (operation === ProductCatalogMethod.DeleteInventoryManufacturer) {
@@ -280,21 +267,18 @@ export async function productCatalogExecution(
 				manufacturer_id: data.getNodeParameter('manufacturer_id', i),
 			})
 		});
-
 	}
 
 	if (operation === ProductCatalogMethod.GetInventoryManufacturers) {
 		return await getInventoryManufacturersExecution({
 			apiKey: apiKey
 		});
-
 	}
 
 	if (operation === ProductCatalogMethod.GetInventoryExtraFields) {
 		return await getInventoryExtraFieldsExecution({
 			apiKey: apiKey
 		});
-
 	}
 
 	if (operation === ProductCatalogMethod.GetInventoryIntegrations) {
@@ -308,7 +292,6 @@ export async function productCatalogExecution(
 				inventory_id: data.getNodeParameter('inventory_id', i),
 			})
 		});
-
 	}
 
 	if (operation === ProductCatalogMethod.GetInventoryAvailableTextFieldKeys) {
@@ -322,7 +305,6 @@ export async function productCatalogExecution(
 				inventory_id: data.getNodeParameter('inventory_id', i),
 			})
 		});
-
 	}
 
 	if (operation === ProductCatalogMethod.AddInventoryProduct) {
@@ -550,7 +532,6 @@ export async function productCatalogExecution(
 				bundle_products: preparedObjectForBundleProducts,
 			})
 		});
-
 	}
 
 	if (operation === ProductCatalogMethod.DeleteInventoryProduct) {
@@ -564,7 +545,6 @@ export async function productCatalogExecution(
 				product_id: data.getNodeParameter('product_id', i),
 			})
 		});
-
 	}
 
 	if (operation === ProductCatalogMethod.GetInventoryProductsData) {
@@ -592,7 +572,6 @@ export async function productCatalogExecution(
 				products,
 			})
 		});
-
 	}
 
 	if (operation === ProductCatalogMethod.GetInventoryProductsList) {
@@ -660,7 +639,6 @@ export async function productCatalogExecution(
 				...schema.parse(additionalFields)
 			}
 		});
-
 	}
 
 	if (operation === ProductCatalogMethod.UpdateInventoryProductsStock) {
@@ -706,7 +684,6 @@ export async function productCatalogExecution(
 				products: preparedObjectForProducts,
 			})
 		});
-
 	}
 
 	if (operation === ProductCatalogMethod.GetInventoryProductsPrices) {
@@ -725,7 +702,6 @@ export async function productCatalogExecution(
 				...schema.parse(additionalFields)
 			}
 		});
-
 	}
 
 	if (operation === ProductCatalogMethod.UpdateInventoryProductsPrices) {
@@ -771,7 +747,6 @@ export async function productCatalogExecution(
 				products: preparedObjectForProducts,
 			})
 		});
-
 	}
 
 	if (operation === ProductCatalogMethod.GetInventoryProductLogs) {
@@ -802,7 +777,6 @@ export async function productCatalogExecution(
 				...schema.parse(additionalFields)
 			}
 		});
-
 	}
 
 	if (operation === ProductCatalogMethod.RunProductMacroTrigger) {
@@ -818,6 +792,5 @@ export async function productCatalogExecution(
 				trigger_id: data.getNodeParameter('product_id', i),
 			})
 		});
-
 	}
 }
