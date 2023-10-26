@@ -6,6 +6,7 @@ export const getExternalStorageCategoriesDefinition: INodeProperties[] = [
 		displayName: 'Storage ID',
 		name: 'storage_id',
 		type: 'string',
+		required: true,
 		displayOptions: {
 			show: {
 				category: [

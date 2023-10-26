@@ -6,6 +6,7 @@ export const getExternalStorageProductsDataDefinition: INodeProperties[] = [
 		displayName: 'Storage ID',
 		name: 'storage_id',
 		type: 'string',
+		required: true,
 		displayOptions: {
 			show: {
 				category: [
@@ -25,6 +26,7 @@ export const getExternalStorageProductsDataDefinition: INodeProperties[] = [
 		name: 'products',
 		placeholder: 'Add Product',
 		type: 'fixedCollection',
+		required: true,
 		default: [],
 		typeOptions: {
 			multipleValues: true,
