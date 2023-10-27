@@ -7,6 +7,7 @@ export async function makeBaselinkerRequest(args: {
 		string | number | boolean | undefined | null |
 		Array< string | number > |
 		Array<Array<string | number>> |
+		Array<Record<string, string | number>> |
 		{ name: string; value: string | number | { name: string } } |
 		Record<string, string | number | Record<string, string | number>> |
 		Record<string, Record<string, number>>>;
