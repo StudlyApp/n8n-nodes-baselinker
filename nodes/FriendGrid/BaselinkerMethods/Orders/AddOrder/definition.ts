@@ -3,61 +3,6 @@ import {Category, OrdersMethod} from "../../types";
 
 export const addOrderDefinition: INodeProperties[] = [
 	{
-		displayName: 'Order Status ID',
-		name: 'order_status_id',
-		type: 'number',
-		required: true,
-		displayOptions: {
-			show: {
-				category: [
-					Category.Orders
-				],
-				operation: [
-					OrdersMethod.AddOrder
-				],
-			},
-		},
-		default: 0,
-		placeholder: '6624',
-		description: 'Order status (the list available to retrieve with getOrderStatusList)',
-	},
-	{
-		displayName: 'Custom Source ID (Optional)',
-		name: 'custom_source_id',
-		type: 'number',
-		displayOptions: {
-			show: {
-				category: [
-					Category.Orders
-				],
-				operation: [
-					OrdersMethod.AddOrder
-				],
-			},
-		},
-		default: 0,
-		description: '(optional) Identifier of custom order source defined in BaseLinker panel. If not provided, default order source is assigned.',
-	},
-	{
-		displayName: 'Date Add',
-		name: 'date_add',
-		type: 'number',
-		required: true,
-		displayOptions: {
-			show: {
-				category: [
-					Category.Orders
-				],
-				operation: [
-					OrdersMethod.AddOrder
-				],
-			},
-		},
-		default: 0,
-		placeholder: '1698395514',
-		description: 'Date of order creation (in unix time format)',
-	},
-	{
 		displayName: 'Currency',
 		name: 'currency',
 		type: 'string',
@@ -75,100 +20,6 @@ export const addOrderDefinition: INodeProperties[] = [
 		default: '',
 		placeholder: 'GBP',
 		description: '3-letter currency symbol (e.g. EUR, PLN)',
-	},
-	{
-		displayName: 'Payment Method',
-		name: 'payment_method',
-		type: 'string',
-		required: true,
-		displayOptions: {
-			show: {
-				category: [
-					Category.Orders
-				],
-				operation: [
-					OrdersMethod.AddOrder
-				],
-			},
-		},
-		default: 'PayPal',
-		placeholder: 'GBP',
-	},
-	{
-		displayName: 'Payment Method Cod',
-		name: 'payment_method_cod',
-		type: 'boolean',
-		required: true,
-		displayOptions: {
-			show: {
-				category: [
-					Category.Orders
-				],
-				operation: [
-					OrdersMethod.AddOrder
-				],
-			},
-		},
-		default: false,
-		// eslint-disable-next-line n8n-nodes-base/node-param-description-boolean-without-whether
-		description: 'Flag indicating whether the type of payment is COD (cash on delivery)'
-	},
-	{
-		displayName: 'Paid',
-		name: 'paid',
-		type: 'boolean',
-		required: true,
-		displayOptions: {
-			show: {
-				category: [
-					Category.Orders
-				],
-				operation: [
-					OrdersMethod.AddOrder
-				],
-			},
-		},
-		default: true,
-		// eslint-disable-next-line n8n-nodes-base/node-param-description-boolean-without-whether
-		description: 'Information whether the order is already paid. The value "1" automatically adds a full payment to the order.'
-	},
-	{
-		displayName: 'User Comments',
-		name: 'user_comments',
-		type: 'string',
-		required: true,
-		displayOptions: {
-			show: {
-				category: [
-					Category.Orders
-				],
-				operation: [
-					OrdersMethod.AddOrder
-				],
-			},
-		},
-		default: '',
-		description: 'Buyer comments',
-		placeholder: 'User comment'
-	},
-	{
-		displayName: 'Admin Comments',
-		name: 'admin_comments',
-		type: 'string',
-		required: true,
-		displayOptions: {
-			show: {
-				category: [
-					Category.Orders
-				],
-				operation: [
-					OrdersMethod.AddOrder
-				],
-			},
-		},
-		default: '',
-		description: 'Seller comments',
-		placeholder: 'Seller test comments'
 	},
 	{
 		displayName: 'Email',
@@ -190,570 +41,10 @@ export const addOrderDefinition: INodeProperties[] = [
 		placeholder: 'test@test.com'
 	},
 	{
-		displayName: 'Phone',
-		name: 'phone',
-		type: 'string',
-		required: true,
-		displayOptions: {
-			show: {
-				category: [
-					Category.Orders
-				],
-				operation: [
-					OrdersMethod.AddOrder
-				],
-			},
-		},
-		default: '',
-		description: 'Buyer phone number',
-		placeholder: '693123123'
-	},
-	{
-		displayName: 'User Login',
-		name: 'user_login',
-		type: 'string',
-		required: true,
-		displayOptions: {
-			show: {
-				category: [
-					Category.Orders
-				],
-				operation: [
-					OrdersMethod.AddOrder
-				],
-			},
-		},
-		default: '',
-		description: 'Allegro or eBay user login',
-		placeholder: 'nick1'
-	},
-	{
-		displayName: 'Delivery Method',
-		name: 'delivery_method',
-		type: 'string',
-		required: true,
-		displayOptions: {
-			show: {
-				category: [
-					Category.Orders
-				],
-				operation: [
-					OrdersMethod.AddOrder
-				],
-			},
-		},
-		default: '',
-		description: 'Delivery method name',
-		placeholder: 'Expedited shipping'
-	},
-	{
-		displayName: 'Delivery Price',
-		name: 'delivery_price',
-		type: 'number',
-		required: true,
-		displayOptions: {
-			show: {
-				category: [
-					Category.Orders
-				],
-				operation: [
-					OrdersMethod.AddOrder
-				],
-			},
-		},
-		default: 0,
-		description: 'Gross delivery price',
-		placeholder: '10'
-	},
-	{
-		displayName: 'Delivery Fullname',
-		name: 'delivery_fullname',
-		type: 'string',
-		required: true,
-		displayOptions: {
-			show: {
-				category: [
-					Category.Orders
-				],
-				operation: [
-					OrdersMethod.AddOrder
-				],
-			},
-		},
-		default: '',
-		description: 'Delivery address - name and surname',
-		placeholder: 'John Doe'
-	},
-	{
-		displayName: 'Delivery Company',
-		name: 'delivery_company',
-		type: 'string',
-		required: true,
-		displayOptions: {
-			show: {
-				category: [
-					Category.Orders
-				],
-				operation: [
-					OrdersMethod.AddOrder
-				],
-			},
-		},
-		default: '',
-		description: 'Delivery address - company',
-		placeholder: 'Company'
-	},
-	{
-		displayName: 'Delivery Address',
-		name: 'delivery_address',
-		type: 'string',
-		required: true,
-		displayOptions: {
-			show: {
-				category: [
-					Category.Orders
-				],
-				operation: [
-					OrdersMethod.AddOrder
-				],
-			},
-		},
-		default: '',
-		description: 'Delivery address - street and number',
-		placeholder: 'Long Str 12'
-	},
-	{
-		displayName: 'Delivery Postcode',
-		name: 'delivery_postcode',
-		type: 'string',
-		required: true,
-		displayOptions: {
-			show: {
-				category: [
-					Category.Orders
-				],
-				operation: [
-					OrdersMethod.AddOrder
-				],
-			},
-		},
-		default: '',
-		description: 'Delivery address - postcode',
-		placeholder: 'E2 8HQ'
-	},
-	{
-		displayName: 'Delivery City',
-		name: 'delivery_city',
-		type: 'string',
-		required: true,
-		displayOptions: {
-			show: {
-				category: [
-					Category.Orders
-				],
-				operation: [
-					OrdersMethod.AddOrder
-				],
-			},
-		},
-		default: '',
-		description: 'Delivery address - city',
-		placeholder: 'London'
-	},
-	{
-		displayName: 'Delivery State',
-		name: 'delivery_state',
-		type: 'string',
-		required: true,
-		displayOptions: {
-			show: {
-				category: [
-					Category.Orders
-				],
-				operation: [
-					OrdersMethod.AddOrder
-				],
-			},
-		},
-		default: '',
-		description: 'Delivery address - state/province',
-		placeholder: ''
-	},
-	{
-		displayName: 'Delivery Country Code',
-		name: 'delivery_country_code',
-		type: 'string',
-		required: true,
-		displayOptions: {
-			show: {
-				category: [
-					Category.Orders
-				],
-				operation: [
-					OrdersMethod.AddOrder
-				],
-			},
-		},
-		default: '',
-		description: 'Delivery address - country code (two-letter, e.g. EN)',
-		placeholder: 'GB'
-	},
-	{
-		displayName: 'Delivery Point ID',
-		name: 'delivery_point_id',
-		type: 'string',
-		required: true,
-		displayOptions: {
-			show: {
-				category: [
-					Category.Orders
-				],
-				operation: [
-					OrdersMethod.AddOrder
-				],
-			},
-		},
-		default: '',
-		description: 'Pick-up point delivery - pick-up point identifier',
-		placeholder: ''
-	},
-	{
-		displayName: 'Delivery Point Name',
-		name: 'delivery_point_name',
-		type: 'string',
-		required: true,
-		displayOptions: {
-			show: {
-				category: [
-					Category.Orders
-				],
-				operation: [
-					OrdersMethod.AddOrder
-				],
-			},
-		},
-		default: '',
-		description: 'Pick-up point delivery - pick-up point name',
-		placeholder: ''
-	},
-	{
-		displayName: 'Delivery Point Address',
-		name: 'delivery_point_address',
-		type: 'string',
-		required: true,
-		displayOptions: {
-			show: {
-				category: [
-					Category.Orders
-				],
-				operation: [
-					OrdersMethod.AddOrder
-				],
-			},
-		},
-		default: '',
-		description: 'Pick-up point delivery - pick-up point address',
-		placeholder: ''
-	},
-	{
-		displayName: 'Delivery Point Postcode',
-		name: 'delivery_point_postcode',
-		type: 'string',
-		required: true,
-		displayOptions: {
-			show: {
-				category: [
-					Category.Orders
-				],
-				operation: [
-					OrdersMethod.AddOrder
-				],
-			},
-		},
-		default: '',
-		description: 'Pick-up point delivery - pick-up point postcode',
-		placeholder: ''
-	},
-	{
-		displayName: 'Delivery Point City',
-		name: 'delivery_point_city',
-		type: 'string',
-		required: true,
-		displayOptions: {
-			show: {
-				category: [
-					Category.Orders
-				],
-				operation: [
-					OrdersMethod.AddOrder
-				],
-			},
-		},
-		default: '',
-		description: 'Pick-up point delivery - pick-up point city',
-		placeholder: ''
-	},
-	{
-		displayName: 'Invoice Fullnam',
-		name: 'invoice_fullname',
-		type: 'string',
-		required: true,
-		displayOptions: {
-			show: {
-				category: [
-					Category.Orders
-				],
-				operation: [
-					OrdersMethod.AddOrder
-				],
-			},
-		},
-		default: '',
-		description: 'Billing details - name and surname',
-		placeholder: 'John Doe'
-	},
-	{
-		displayName: 'Invoice Company',
-		name: 'invoice_company',
-		type: 'string',
-		required: true,
-		displayOptions: {
-			show: {
-				category: [
-					Category.Orders
-				],
-				operation: [
-					OrdersMethod.AddOrder
-				],
-			},
-		},
-		default: '',
-		description: 'Billing details - company',
-		placeholder: 'Company'
-	},
-	{
-		displayName: 'Invoice NIP',
-		name: 'invoice_nip',
-		type: 'string',
-		required: true,
-		displayOptions: {
-			show: {
-				category: [
-					Category.Orders
-				],
-				operation: [
-					OrdersMethod.AddOrder
-				],
-			},
-		},
-		default: '',
-		description: 'Billing details - Vat Reg. no./tax number.',
-		placeholder: 'GB8943245'
-	},
-	{
-		displayName: 'Invoice Address',
-		name: 'invoice_address',
-		type: 'string',
-		required: true,
-		displayOptions: {
-			show: {
-				category: [
-					Category.Orders
-				],
-				operation: [
-					OrdersMethod.AddOrder
-				],
-			},
-		},
-		default: '',
-		description: 'Billing details - street and house number',
-		placeholder: 'Long Str 12'
-	},
-	{
-		displayName: 'Invoice Postcode',
-		name: 'invoice_postcode',
-		type: 'string',
-		required: true,
-		displayOptions: {
-			show: {
-				category: [
-					Category.Orders
-				],
-				operation: [
-					OrdersMethod.AddOrder
-				],
-			},
-		},
-		default: '',
-		description: 'Billing details - postcode',
-		placeholder: 'E2 8HQ'
-	},
-	{
-		displayName: 'Invoice City',
-		name: 'invoice_city',
-		type: 'string',
-		required: true,
-		displayOptions: {
-			show: {
-				category: [
-					Category.Orders
-				],
-				operation: [
-					OrdersMethod.AddOrder
-				],
-			},
-		},
-		default: '',
-		description: 'Billing details - city',
-		placeholder: 'London'
-	},
-	{
-		displayName: 'Invoice State',
-		name: 'invoice_state',
-		type: 'string',
-		required: true,
-		displayOptions: {
-			show: {
-				category: [
-					Category.Orders
-				],
-				operation: [
-					OrdersMethod.AddOrder
-				],
-			},
-		},
-		default: '',
-		description: 'Billing details - state/province',
-		placeholder: ''
-	},
-	{
-		displayName: 'Invoice Country Code',
-		name: 'invoice_country_code',
-		type: 'string',
-		required: true,
-		displayOptions: {
-			show: {
-				category: [
-					Category.Orders
-				],
-				operation: [
-					OrdersMethod.AddOrder
-				],
-			},
-		},
-		default: '',
-		description: 'Billing details - country code (two-letter, e.g. EN)',
-		placeholder: 'GB'
-	},
-	{
-		displayName: 'Want Invoice',
-		name: 'want_invoice',
-		type: 'boolean',
-		required: true,
-		displayOptions: {
-			show: {
-				category: [
-					Category.Orders
-				],
-				operation: [
-					OrdersMethod.AddOrder
-				],
-			},
-		},
-		default: false,
-		// eslint-disable-next-line n8n-nodes-base/node-param-description-boolean-without-whether
-		description: 'Flag indicating whether the customer wants an invoice (1 - yes, 0 - no)',
-	},
-	{
-		displayName: 'Extra Field 1',
-		name: 'extra_field_1',
-		type: 'string',
-		required: true,
-		displayOptions: {
-			show: {
-				category: [
-					Category.Orders
-				],
-				operation: [
-					OrdersMethod.AddOrder
-				],
-			},
-		},
-		default: '',
-		description: 'Value of the "additional field 1". - the seller can store any information there.',
-		placeholder: 'field test 1'
-	},
-	{
-		displayName: 'Extra Field 2',
-		name: 'extra_field_2',
-		type: 'string',
-		required: true,
-		displayOptions: {
-			show: {
-				category: [
-					Category.Orders
-				],
-				operation: [
-					OrdersMethod.AddOrder
-				],
-			},
-		},
-		default: '',
-		description: 'Value of the "additional field 2". - the seller can store any information there.',
-		placeholder: ''
-	},
-	{
-		displayName: 'Custom Extra Fields (Optional)',
-		name: 'custom_extra_fields',
-		placeholder: 'Add Extra Field',
-		type: 'fixedCollection',
-		default: {},
-		typeOptions: {
-			multipleValues: true,
-		},
-		description: '\tA list containing order custom extra fields, where the key is the extra field ID and value is an extra field content for given extra field. The list of extra fields can be retrieved with getOrderExtraFields method.\n' +
-			'In case of removing a field the empty string is expected.',
-		options: [
-			{
-				name: 'metadataValues',
-				displayName: 'Metadata',
-				values: [
-					{
-						displayName: 'Extra Field Name',
-						name: 'extra_field_name',
-						type: 'string',
-						default: '',
-						placeholder: '135',
-						description: 'Name (key) is the extra field ID'
-					},
-					{
-						displayName: 'Extra Field Value',
-						name: 'extra_field_value',
-						type: 'string',
-						default: '',
-						placeholder: 'B2B',
-						description: 'Value is an extra field content for given extra field'
-					},
-				],
-			},
-		],
-		displayOptions: {
-			show: {
-				category: [
-					Category.Orders
-				],
-				operation: [
-					OrdersMethod.AddOrder
-				],
-			},
-		},
-	},
-	{
 		displayName: 'Products',
 		name: 'products',
 		placeholder: 'Add Product',
 		type: 'fixedCollection',
-		required: true,
 		default: {},
 		typeOptions: {
 			multipleValues: true,
@@ -779,7 +70,7 @@ export const addOrderDefinition: INodeProperties[] = [
 				displayName: 'Metadata',
 				values: [
 					{
-						displayName: 'Storage',
+						displayName: 'Storage (Optional)',
 						name: 'storage',
 						type: 'string',
 						default: '',
@@ -787,7 +78,7 @@ export const addOrderDefinition: INodeProperties[] = [
 						description: 'Type of magazine from which the product comes (available values: "db" - BaseLinker internal catalog, "shop" - the online store magazine, "warehouse" - a connected wholesaler)'
 					},
 					{
-						displayName: 'Storage ID',
+						displayName: 'Storage ID (Optional)',
 						name: 'storage_id',
 						type: 'number',
 						default: 0,
@@ -797,6 +88,7 @@ export const addOrderDefinition: INodeProperties[] = [
 						displayName: 'Product ID',
 						name: 'product_id',
 						type: 'string',
+						required: true,
 						default: '',
 						placeholder: '5434',
 						description: 'Product identifier in BaseLinker or store magazine. Blank if the product number is unknown.'
@@ -812,12 +104,13 @@ export const addOrderDefinition: INodeProperties[] = [
 						displayName: 'Name',
 						name: 'name',
 						type: 'string',
+						required: true,
 						default: '',
 						placeholder: 'Harry Potter and the Chamber of Secrets',
 						description: 'Product name'
 					},
 					{
-						displayName: 'SKU',
+						displayName: 'SKU (Optional)',
 						name: 'sku',
 						type: 'string',
 						default: '',
@@ -825,7 +118,7 @@ export const addOrderDefinition: INodeProperties[] = [
 						description: 'Product sku'
 					},
 					{
-						displayName: 'EAN',
+						displayName: 'EAN (Optional)',
 						name: 'ean',
 						type: 'string',
 						default: '',
@@ -833,7 +126,7 @@ export const addOrderDefinition: INodeProperties[] = [
 						description: 'Product ean'
 					},
 					{
-						displayName: 'Location',
+						displayName: 'Location (Optional)',
 						name: 'location',
 						type: 'string',
 						default: '',
@@ -841,14 +134,14 @@ export const addOrderDefinition: INodeProperties[] = [
 						description: 'Product location'
 					},
 					{
-						displayName: 'Warehouse ID',
+						displayName: 'Warehouse ID (Optional)',
 						name: 'warehouse_id',
 						type: 'number',
 						default: 0,
 						description: 'Product source warehouse identifier. Only applies to products from BaseLinker inventory. By default warehouse_id is determined based on the source of the order.'
 					},
 					{
-						displayName: 'Attributes',
+						displayName: 'Attributes (Optional)',
 						name: 'attributes',
 						type: 'string',
 						default: '',
@@ -858,17 +151,19 @@ export const addOrderDefinition: INodeProperties[] = [
 						displayName: 'Price Brutto',
 						name: 'price_brutto',
 						type: 'number',
+						required: true,
 						typeOptions: {
 							numberPrecision: 2,
 						},
 						default: 0,
 						placeholder: '20.00',
-						description: 'Single item gross price'
+						description: 'Single item gross price, 100 means 100zł, 10.99 means 10.99zł'
 					},
 					{
 						displayName: 'Tax Rate',
 						name: 'tax_rate',
 						type: 'number',
+						required: true,
 						typeOptions: {
 							numberPrecision: 2,
 						},
@@ -880,12 +175,13 @@ export const addOrderDefinition: INodeProperties[] = [
 						displayName: 'Quantity',
 						name: 'quantity',
 						type: 'number',
+						required: true,
 						default: 0,
 						placeholder: '2',
 						description: 'Quantity of pieces'
 					},
 					{
-						displayName: 'Weight',
+						displayName: 'Weight (Optional)',
 						name: 'weight',
 						type: 'number',
 						typeOptions: {
@@ -908,5 +204,348 @@ export const addOrderDefinition: INodeProperties[] = [
 				],
 			},
 		},
+	},
+	{
+		displayName: 'Additional Fields',
+		name: 'additionalFields',
+		type: 'collection',
+		placeholder: 'Add Field',
+		default: {},
+		displayOptions: {
+			show: {
+				category: [
+					Category.Orders
+				],
+				operation: [
+					OrdersMethod.AddOrder
+				],
+			},
+		},
+		options: [
+			{
+				displayName: 'Order Status ID (Optional)',
+				name: 'order_status_id',
+				type: 'number',
+				default: 0,
+				placeholder: '6624',
+				description: 'Order status (the list available to retrieve with getOrderStatusList)',
+			},
+			{
+				displayName: 'Custom Source ID (Optional)',
+				name: 'custom_source_id',
+				type: 'number',
+				default: 0,
+				description: '(optional) Identifier of custom order source defined in BaseLinker panel. If not provided, default order source is assigned.',
+			},
+			{
+				displayName: 'Date Add (Optional)',
+				name: 'date_add',
+				type: 'number',
+				default: 0,
+				placeholder: '1698395514',
+				description: 'Date of order creation (in unix time format)',
+			},
+			{
+				displayName: 'Payment Method (Optional)',
+				name: 'payment_method',
+				type: 'string',
+				default: 'PayPal',
+				placeholder: 'GBP',
+			},
+			{
+				displayName: 'Payment Method Cod (Optional)',
+				name: 'payment_method_cod',
+				type: 'boolean',
+				default: false,
+				// eslint-disable-next-line n8n-nodes-base/node-param-description-boolean-without-whether
+				description: 'Flag indicating whether the type of payment is COD (cash on delivery)'
+			},
+			{
+				displayName: 'Paid (Optional)',
+				name: 'paid',
+				type: 'boolean',
+				default: true,
+				// eslint-disable-next-line n8n-nodes-base/node-param-description-boolean-without-whether
+				description: 'Information whether the order is already paid. The value "1" automatically adds a full payment to the order.'
+			},
+			{
+				displayName: 'User Comments (Optional)',
+				name: 'user_comments',
+				type: 'string',
+				default: '',
+				description: 'Buyer comments',
+				placeholder: 'User comment'
+			},
+			{
+				displayName: 'Admin Comments (Optional)',
+				name: 'admin_comments',
+				type: 'string',
+				default: '',
+				description: 'Seller comments',
+				placeholder: 'Seller test comments'
+			},
+			{
+				displayName: 'Phone (Optional)',
+				name: 'phone',
+				type: 'string',
+				default: '',
+				description: 'Buyer phone number',
+				placeholder: '693123123'
+			},
+			{
+				displayName: 'User Login (Optional)',
+				name: 'user_login',
+				type: 'string',
+				default: '',
+				description: 'Allegro or eBay user login',
+				placeholder: 'nick1'
+			},
+			{
+				displayName: 'Delivery Method (Optional)',
+				name: 'delivery_method',
+				type: 'string',
+				default: '',
+				description: 'Delivery method name',
+				placeholder: 'Expedited shipping'
+			},
+			{
+				displayName: 'Delivery Price (Optional)',
+				name: 'delivery_price',
+				type: 'number',
+				default: 0,
+				description: 'Gross delivery price',
+				placeholder: '10'
+			},
+			{
+				displayName: 'Delivery Fullname (Optional)',
+				name: 'delivery_fullname',
+				type: 'string',
+				default: '',
+				description: 'Delivery address - name and surname',
+				placeholder: 'John Doe'
+			},
+			{
+				displayName: 'Delivery Company (Optional)',
+				name: 'delivery_company',
+				type: 'string',
+				default: '',
+				description: 'Delivery address - company',
+				placeholder: 'Company'
+			},
+			{
+				displayName: 'Delivery Address (Optional)',
+				name: 'delivery_address',
+				type: 'string',
+				default: '',
+				description: 'Delivery address - street and number',
+				placeholder: 'Long Str 12'
+			},
+			{
+				displayName: 'Delivery Postcode (Optional)',
+				name: 'delivery_postcode',
+				type: 'string',
+				default: '',
+				description: 'Delivery address - postcode',
+				placeholder: 'E2 8HQ'
+			},
+			{
+				displayName: 'Delivery City (Optional)',
+				name: 'delivery_city',
+				type: 'string',
+				default: '',
+				description: 'Delivery address - city',
+				placeholder: 'London'
+			},
+			{
+				displayName: 'Delivery State (Optional)',
+				name: 'delivery_state',
+				type: 'string',
+				default: '',
+				description: 'Delivery address - state/province',
+				placeholder: ''
+			},
+			{
+				displayName: 'Delivery Country Code (Optional)',
+				name: 'delivery_country_code',
+				type: 'string',
+				default: '',
+				description: 'Delivery address - country code (two-letter, e.g. EN)',
+				placeholder: 'GB'
+			},
+			{
+				displayName: 'Delivery Point ID (Optional)',
+				name: 'delivery_point_id',
+				type: 'string',
+				default: '',
+				description: 'Pick-up point delivery - pick-up point identifier',
+				placeholder: ''
+			},
+			{
+				displayName: 'Delivery Point Name (Optional)',
+				name: 'delivery_point_name',
+				type: 'string',
+				default: '',
+				description: 'Pick-up point delivery - pick-up point name',
+				placeholder: ''
+			},
+			{
+				displayName: 'Delivery Point Address (Optional)',
+				name: 'delivery_point_address',
+				type: 'string',
+				default: '',
+				description: 'Pick-up point delivery - pick-up point address',
+				placeholder: ''
+			},
+			{
+				displayName: 'Delivery Point Postcode (Optional)',
+				name: 'delivery_point_postcode',
+				type: 'string',
+				default: '',
+				description: 'Pick-up point delivery - pick-up point postcode',
+				placeholder: ''
+			},
+			{
+				displayName: 'Delivery Point City (Optional)',
+				name: 'delivery_point_city',
+				type: 'string',
+				default: '',
+				description: 'Pick-up point delivery - pick-up point city',
+				placeholder: ''
+			},
+			{
+				displayName: 'Invoice Fullnam (Optional)',
+				name: 'invoice_fullname',
+				type: 'string',
+				default: '',
+				description: 'Billing details - name and surname',
+				placeholder: 'John Doe'
+			},
+			{
+				displayName: 'Invoice Company (Optional)',
+				name: 'invoice_company',
+				type: 'string',
+				default: '',
+				description: 'Billing details - company',
+				placeholder: 'Company'
+			},
+			{
+				displayName: 'Invoice NIP (Optional)',
+				name: 'invoice_nip',
+				type: 'string',
+				default: '',
+				description: 'Billing details - Vat Reg. no./tax number.',
+				placeholder: 'GB8943245'
+			},
+			{
+				displayName: 'Invoice Address (Optional)',
+				name: 'invoice_address',
+				type: 'string',
+				default: '',
+				description: 'Billing details - street and house number',
+				placeholder: 'Long Str 12'
+			},
+			{
+				displayName: 'Invoice Postcode (Optional)',
+				name: 'invoice_postcode',
+				type: 'string',
+				default: '',
+				description: 'Billing details - postcode',
+				placeholder: 'E2 8HQ'
+			},
+			{
+				displayName: 'Invoice City (Optional)',
+				name: 'invoice_city',
+				type: 'string',
+				default: '',
+				description: 'Billing details - city',
+				placeholder: 'London'
+			},
+			{
+				displayName: 'Invoice State (Optional)',
+				name: 'invoice_state',
+				type: 'string',
+				default: '',
+				description: 'Billing details - state/province',
+				placeholder: ''
+			},
+			{
+				displayName: 'Invoice Country Code (Optional)',
+				name: 'invoice_country_code',
+				type: 'string',
+				default: '',
+				description: 'Billing details - country code (two-letter, e.g. EN)',
+				placeholder: 'GB'
+			},
+			{
+				displayName: 'Want Invoice (Optional)',
+				name: 'want_invoice',
+				type: 'boolean',
+				default: false,
+				// eslint-disable-next-line n8n-nodes-base/node-param-description-boolean-without-whether
+				description: 'Flag indicating whether the customer wants an invoice (1 - yes, 0 - no)',
+			},
+			{
+				displayName: 'Extra Field 1 (Optional)',
+				name: 'extra_field_1',
+				type: 'string',
+				default: '',
+				description: 'Value of the "additional field 1". - the seller can store any information there.',
+				placeholder: 'field test 1'
+			},
+			{
+				displayName: 'Extra Field 2 (Optional)',
+				name: 'extra_field_2',
+				type: 'string',
+				default: '',
+				description: 'Value of the "additional field 2". - the seller can store any information there.',
+				placeholder: ''
+			},
+			{
+				displayName: 'Custom Extra Fields (Optional)',
+				name: 'custom_extra_fields',
+				placeholder: 'Add Extra Field',
+				type: 'fixedCollection',
+				default: {},
+				typeOptions: {
+					multipleValues: true,
+				},
+				description: '\tA list containing order custom extra fields, where the key is the extra field ID and value is an extra field content for given extra field. The list of extra fields can be retrieved with getOrderExtraFields method.\n' +
+					'In case of removing a field the empty string is expected.',
+				options: [
+					{
+						name: 'metadataValues',
+						displayName: 'Metadata',
+						values: [
+							{
+								displayName: 'Extra Field ID',
+								name: 'extra_field_id',
+								type: 'string',
+								required: true,
+								default: '',
+								placeholder: '135',
+								description: 'Key is the extra field ID'
+							},
+							{
+								displayName: 'Extra Field Name (Optional)',
+								name: 'extra_field_name',
+								type: 'string',
+								default: '',
+								placeholder: '135',
+								description: 'Name is the extra field name'
+							},
+							{
+								displayName: 'Extra Field Value',
+								name: 'extra_field_value',
+								type: 'string',
+								required: true,
+								default: '',
+								placeholder: 'B2B',
+								description: 'Value is an extra field content for given extra field'
+							},
+						],
+					},
+				],
+			},
+		],
 	},
 ];
