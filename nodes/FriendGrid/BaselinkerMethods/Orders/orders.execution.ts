@@ -19,6 +19,16 @@ import {getNewReceiptsExecution} from "./GetNewReceipts/execution";
 import {getReceiptExecution} from "./GetReceipt/execution";
 import {setOrderFieldsExecution} from "./SetOrderFields/execution";
 import {addOrderProductExecution} from "./AddOrderProduct/execution";
+import {setOrderProductFieldsExecution} from "./SetOrderProductFields/execution";
+import {deleteOrderProductExecution} from "./DeleteOrderProduct/execution";
+import {setOrderPaymentExecution} from "./SetOrderPayment/execution";
+import {setOrderStatusExecution} from "./SetOrderStatus/execution";
+import {setOrderStatusesExecution} from "./SetOrderStatuses/execution";
+import {setOrderReceiptExecution} from "./SetOrderReceipt/execution";
+import {addOrderInvoiceFileExecution} from "./AddOrderInvoiceFile/execution";
+import {addOrderReceiptFileExecution} from "./AddOrderReceiptFile/execution";
+import {getInvoiceFileExecution} from "./GetInvoiceFile/execution";
+import {runOrderMacroTriggerExecution} from "./RunOrderMacroTrigger/execution";
 
 export async function ordersExecution(
 	data: IExecuteFunctions,
@@ -59,7 +69,7 @@ export async function ordersExecution(
 	if (operation === OrdersMethod.AddOrder) {
 		const schema = zod.object({
 			currency: zod.string(),
-			email: zod.string().email( { message: "🚨 Invalid email address!"}),
+			email: zod.string().email({message: "🚨 Invalid email address!"}),
 			products: zod.array(
 				zod.record(zod.string(), zod.union([
 					zod.string(), zod.number()
@@ -123,7 +133,7 @@ export async function ordersExecution(
 			attributes: zod.string().nullish(),
 			price_brutto: zod.number().nonnegative(),
 			tax_rate: zod.number().nonnegative(),
-			quantity: zod.number().gt(0, { message: '🚨 Quantity is to small!'}),
+			quantity: zod.number().gt(0, {message: '🚨 Quantity is to small!'}),
 			weight: zod.number().nullish(),
 		}))
 
@@ -135,7 +145,7 @@ export async function ordersExecution(
 		const products = metadataObjectSchemaOfProducts.parse(
 			data.getNodeParameter('products', i)).metadataValues?.map(el => {
 				if (el.tax_rate < 1) {
-					el.tax_rate = el.tax_rate*=100;
+					el.tax_rate = el.tax_rate *= 100;
 				}
 
 				return {
@@ -596,7 +606,7 @@ export async function ordersExecution(
 			product_id: zod.string(),
 			price_brutto: zod.number().nonnegative(),
 			tax_rate: zod.number().nonnegative(),
-			quantity: zod.number().gt(0, { message: '🚨 Quantity is to small!'}),
+			quantity: zod.number().gt(0, {message: '🚨 Quantity is to small!'}),
 		});
 
 		const schemaAdditionalFields = zod.object({
@@ -640,6 +650,254 @@ export async function ordersExecution(
 					weight: additionalFields.weight,
 				})
 			}
+		});
+	}
+
+	if (operation === OrdersMethod.SetOrderProductFields) {
+		const schema = zod.object({
+			order_id: zod.number(),
+			order_product_id: zod.number(),
+		});
+
+		const schemaAdditionalFields = zod.object({
+			storage: zod.string().nullish(),
+			storage_id: zod.string().nullish(),
+			product_id: zod.string().nullish(),
+			variant_id: zod.string().nullish(),
+			auction_id: zod.string().nullish(),
+			name: zod.string().nullish(),
+			sku: zod.string().nullish(),
+			ean: zod.string().nullish(),
+			location: zod.string().nullish(),
+			warehouse_id: zod.number().nullish(),
+			attributes: zod.string().nullish(),
+			price_brutto: zod.number().nonnegative().nullish(),
+			tax_rate: zod.number().nonnegative().nullish(),
+			quantity: zod.number().gt(0, {message: '🚨 Quantity is to small!'}).nullish(),
+			weight: zod.number().nullish(),
+		})
+
+		const additionalFields = data.getNodeParameter('additionalFields', i);
+
+		return await setOrderProductFieldsExecution({
+			apiKey: apiKey,
+			input: {
+				...schema.parse({
+					order_id: data.getNodeParameter('order_id', i),
+					order_product_id: data.getNodeParameter('order_product_id', i),
+				}),
+				...schemaAdditionalFields.parse({
+					storage: additionalFields.storage,
+					storage_id: additionalFields.storage_id,
+					product_id: additionalFields.product_id,
+					variant_id: additionalFields.variant_id,
+					auction_id: additionalFields.auction_id,
+					name: additionalFields.name,
+					sku: additionalFields.sku,
+					ean: additionalFields.ean,
+					location: additionalFields.location,
+					warehouse_id: additionalFields.warehouse_id,
+					attributes: additionalFields.attributes,
+					price_brutto: additionalFields.price_brutto,
+					tax_rate: additionalFields.tax_rate,
+					quantity: additionalFields.quantity,
+					weight: additionalFields.weight,
+				})
+			}
+		});
+	}
+
+	if (operation === OrdersMethod.DeleteOrderProduct) {
+		const schema = zod.object({
+			order_id: zod.number(),
+			order_product_id: zod.number(),
+		});
+
+		return await deleteOrderProductExecution({
+			apiKey: apiKey,
+			input: schema.parse({
+				order_id: data.getNodeParameter('order_id', i),
+				order_product_id: data.getNodeParameter('order_product_id', i),
+			}),
+		});
+	}
+
+	if (operation === OrdersMethod.SetOrderPayment) {
+		const schema = zod.object({
+			order_id: zod.number(),
+			payment_done: zod.number(),
+			payment_date: zod.number(),
+			payment_comment: zod.string(),
+		});
+
+		const schemaAdditionalFields = zod.object({
+			external_payment_id: zod.string().nullish(),
+		})
+
+		const additionalFields = data.getNodeParameter('additionalFields', i);
+
+		return await setOrderPaymentExecution({
+			apiKey: apiKey,
+			input: {
+				...schema.parse({
+					order_id: data.getNodeParameter('order_id', i),
+					order_product_id: data.getNodeParameter('order_product_id', i),
+					payment_date: data.getNodeParameter('payment_date', i),
+					payment_comment: data.getNodeParameter('payment_comment', i),
+				}),
+				...schemaAdditionalFields.parse({
+					external_payment_id: additionalFields.external_payment_id,
+				})
+			}
+		});
+	}
+
+	if (operation === OrdersMethod.SetOrderStatus) {
+		const schema = zod.object({
+			order_id: zod.number(),
+			status_id: zod.number(),
+		});
+
+		return await setOrderStatusExecution({
+			apiKey: apiKey,
+			input: schema.parse({
+				order_id: data.getNodeParameter('order_id', i),
+				status_id: data.getNodeParameter('status_id', i),
+			}),
+		});
+	}
+
+	if (operation === OrdersMethod.SetOrderStatuses) {
+		const schema = zod.object({
+			order_ids: zod.array(zod.number()),
+			status_id: zod.number(),
+		});
+
+		const metadataArraySchemaOfOrderIDs = zod.array(zod.object({
+			order_id: zod.number(),
+		}))
+
+		const metadataObjectSchemaOfOrderIds = zod.object({
+			metadataValues: metadataArraySchemaOfOrderIDs,
+		})
+
+		const order_ids = metadataObjectSchemaOfOrderIds.parse(
+			data.getNodeParameter('order_ids', i)).metadataValues?.map(el => el.order_id);
+
+		return await setOrderStatusesExecution({
+			apiKey: apiKey,
+			input: schema.parse({
+				order_ids,
+				status_id: data.getNodeParameter('status_id', i),
+			}),
+		});
+	}
+
+	if (operation === OrdersMethod.SetOrderReceipt) {
+		const schema = zod.object({
+			receipt_id: zod.number(),
+			date: zod.number(),
+		});
+
+		const schemaAdditionalFields = zod.object({
+			receipt_nr: zod.string().nullish(),
+			printer_error: zod.boolean().nullish(),
+			printer_name: zod.string().nullish(),
+		})
+
+		const additionalFields = data.getNodeParameter('additionalFields', i);
+
+		return await setOrderReceiptExecution({
+			apiKey: apiKey,
+			input: {
+				...schema.parse({
+					receipt_id: data.getNodeParameter('receipt_id', i),
+					date: data.getNodeParameter('date', i),
+				}),
+				...schemaAdditionalFields.parse({
+					receipt_nr: additionalFields.receipt_nr,
+					printer_error: additionalFields.printer_error,
+					printer_name: additionalFields.printer_name,
+				})
+			}
+		});
+	}
+
+	if (operation === OrdersMethod.AddOrderInvoiceFile) {
+		const schema = zod.object({
+			invoice_id: zod.number(),
+			file: zod.string(),
+			external_invoice_number: zod.string(),
+		});
+
+		let file = data.getNodeParameter('file', i);
+		if (!file) {
+			throw new Error('🚨 Field \'file\' Cannot be empty!');
+		}
+		if (!file?.toString().startsWith('data:')) {
+			file = `data:${file}`;
+		}
+
+		return await addOrderInvoiceFileExecution({
+			apiKey: apiKey,
+			input: schema.parse({
+				invoice_id: data.getNodeParameter('invoice_id', i),
+				file,
+				external_invoice_number: data.getNodeParameter('external_invoice_number', i),
+			}),
+		});
+	}
+
+	if (operation === OrdersMethod.AddOrderReceiptFile) {
+		const schema = zod.object({
+			receipt_id: zod.number(),
+			file: zod.string(),
+			external_receipt_number: zod.string(),
+		});
+
+		let file = data.getNodeParameter('file', i);
+		if (!file) {
+			throw new Error('🚨 Field \'file\' Cannot be empty!');
+		}
+		if (!file?.toString().startsWith('data:')) {
+			file = `data:${file}`;
+		}
+
+		return await addOrderReceiptFileExecution({
+			apiKey: apiKey,
+			input: schema.parse({
+				receipt_id: data.getNodeParameter('receipt_id', i),
+				file,
+				external_receipt_number: data.getNodeParameter('external_receipt_number', i),
+			}),
+		});
+	}
+
+	if (operation === OrdersMethod.GetInvoiceFile) {
+		const schema = zod.object({
+			invoice_id: zod.number(),
+		});
+
+		return await getInvoiceFileExecution({
+			apiKey: apiKey,
+			input: schema.parse({
+				invoice_id: data.getNodeParameter('invoice_id', i),
+			}),
+		});
+	}
+
+	if (operation === OrdersMethod.RunOrderMacroTrigger) {
+		const schema = zod.object({
+			order_id: zod.number(),
+			trigger_id: zod.number(),
+		});
+
+		return await runOrderMacroTriggerExecution({
+			apiKey: apiKey,
+			input: schema.parse({
+				order_id: data.getNodeParameter('order_id', i),
+				trigger_id: data.getNodeParameter('trigger_id', i),
+			}),
 		});
 	}
 }
