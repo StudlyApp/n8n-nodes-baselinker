@@ -1,5 +1,5 @@
 import {INodeProperties} from "n8n-workflow";
-import {Category, ProductCatalogMethod} from "../../types";
+import {Resource, ProductCatalogMethod} from "../../types";
 
 export const addInventoryDefinition: INodeProperties[] = [
 	{
@@ -8,8 +8,8 @@ export const addInventoryDefinition: INodeProperties[] = [
 		type: 'number',
 		displayOptions: {
 			show: {
-				category: [
-					Category.ProductCatalog
+				resource: [
+					Resource.ProductCatalog
 				],
 				operation: [
 					ProductCatalogMethod.AddInventory
@@ -27,8 +27,8 @@ export const addInventoryDefinition: INodeProperties[] = [
 		required: true,
 		displayOptions: {
 			show: {
-				category: [
-					Category.ProductCatalog
+				resource: [
+					Resource.ProductCatalog
 				],
 				operation: [
 					ProductCatalogMethod.AddInventory
@@ -49,8 +49,8 @@ export const addInventoryDefinition: INodeProperties[] = [
 		},
 		displayOptions: {
 			show: {
-				category: [
-					Category.ProductCatalog
+				resource: [
+					Resource.ProductCatalog
 				],
 				operation: [
 					ProductCatalogMethod.AddInventory
@@ -90,8 +90,8 @@ export const addInventoryDefinition: INodeProperties[] = [
 		],
 		displayOptions: {
 			show: {
-				category: [
-					Category.ProductCatalog
+				resource: [
+					Resource.ProductCatalog
 				],
 				operation: [
 					ProductCatalogMethod.AddInventory
@@ -106,8 +106,8 @@ export const addInventoryDefinition: INodeProperties[] = [
 		required: true,
 		displayOptions: {
 			show: {
-				category: [
-					Category.ProductCatalog
+				resource: [
+					Resource.ProductCatalog
 				],
 				operation: [
 					ProductCatalogMethod.AddInventory
@@ -147,8 +147,8 @@ export const addInventoryDefinition: INodeProperties[] = [
 		],
 		displayOptions: {
 			show: {
-				category: [
-					Category.ProductCatalog
+				resource: [
+					Resource.ProductCatalog
 				],
 				operation: [
 					ProductCatalogMethod.AddInventory
@@ -163,8 +163,8 @@ export const addInventoryDefinition: INodeProperties[] = [
 		required: true,
 		displayOptions: {
 			show: {
-				category: [
-					Category.ProductCatalog
+				resource: [
+					Resource.ProductCatalog
 				],
 				operation: [
 					ProductCatalogMethod.AddInventory
@@ -204,8 +204,8 @@ export const addInventoryDefinition: INodeProperties[] = [
 		],
 		displayOptions: {
 			show: {
-				category: [
-					Category.ProductCatalog
+				resource: [
+					Resource.ProductCatalog
 				],
 				operation: [
 					ProductCatalogMethod.AddInventory
@@ -220,8 +220,8 @@ export const addInventoryDefinition: INodeProperties[] = [
 		required: true,
 		displayOptions: {
 			show: {
-				category: [
-					Category.ProductCatalog
+				resource: [
+					Resource.ProductCatalog
 				],
 				operation: [
 					ProductCatalogMethod.AddInventory
@@ -239,8 +239,8 @@ export const addInventoryDefinition: INodeProperties[] = [
 		required: true,
 		displayOptions: {
 			show: {
-				category: [
-					Category.ProductCatalog
+				resource: [
+					Resource.ProductCatalog
 				],
 				operation: [
 					ProductCatalogMethod.AddInventory

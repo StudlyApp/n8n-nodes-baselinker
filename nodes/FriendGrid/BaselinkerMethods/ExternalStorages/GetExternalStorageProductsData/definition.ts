@@ -1,5 +1,5 @@
 import {INodeProperties} from "n8n-workflow";
-import {Category, ExternalStoragesMethod} from "../../types";
+import {Resource, ExternalStoragesMethod} from "../../types";
 
 export const getExternalStorageProductsDataDefinition: INodeProperties[] = [
 	{
@@ -9,8 +9,8 @@ export const getExternalStorageProductsDataDefinition: INodeProperties[] = [
 		required: true,
 		displayOptions: {
 			show: {
-				category: [
-					Category.ExternalStorages
+				resource: [
+					Resource.ExternalStorages
 				],
 				operation: [
 					ExternalStoragesMethod.GetExternalStorageProductsData
@@ -48,8 +48,8 @@ export const getExternalStorageProductsDataDefinition: INodeProperties[] = [
 		],
 		displayOptions: {
 			show: {
-				category: [
-					Category.ExternalStorages
+				resource: [
+					Resource.ExternalStorages
 				],
 				operation: [
 					ExternalStoragesMethod.GetExternalStorageProductsData

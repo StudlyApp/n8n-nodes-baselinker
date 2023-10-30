@@ -1,5 +1,5 @@
 import {INodeProperties} from "n8n-workflow";
-import {Category, ProductCatalogMethod} from "../../types";
+import {Resource, ProductCatalogMethod} from "../../types";
 
 export const getInventoryCategoriesDefinition: INodeProperties[] = [
 	{
@@ -8,8 +8,8 @@ export const getInventoryCategoriesDefinition: INodeProperties[] = [
 		type: 'number',
 		displayOptions: {
 			show: {
-				category: [
-					Category.ProductCatalog
+				resource: [
+					Resource.ProductCatalog
 				],
 				operation: [
 					ProductCatalogMethod.GetInventoryCategories

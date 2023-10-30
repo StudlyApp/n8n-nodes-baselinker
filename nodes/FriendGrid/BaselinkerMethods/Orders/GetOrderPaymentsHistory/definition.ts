@@ -1,5 +1,5 @@
 import {INodeProperties} from "n8n-workflow";
-import {Category, OrdersMethod} from "../../types";
+import {Resource, OrdersMethod} from "../../types";
 
 export const getOrderPaymentsHistoryDefinition: INodeProperties[] = [
 	{
@@ -9,8 +9,8 @@ export const getOrderPaymentsHistoryDefinition: INodeProperties[] = [
 		required: true,
 		displayOptions: {
 			show: {
-				category: [
-					Category.Orders
+				resource: [
+					Resource.Orders
 				],
 				operation: [
 					OrdersMethod.GetOrderPaymentsHistory
@@ -29,8 +29,8 @@ export const getOrderPaymentsHistoryDefinition: INodeProperties[] = [
 		default: {},
 		displayOptions: {
 			show: {
-				category: [
-					Category.Orders
+				resource: [
+					Resource.Orders
 				],
 				operation: [
 					OrdersMethod.GetOrderPaymentsHistory

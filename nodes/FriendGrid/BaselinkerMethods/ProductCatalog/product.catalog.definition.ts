@@ -1,4 +1,4 @@
-import {Category, ProductCatalogMethod} from "../types";
+import {Resource, ProductCatalogMethod} from "../types";
 import {INodeProperties} from "n8n-workflow";
 import {addInventoryPriceGroupDefinition} from "./AddInventoryPriceGroup/definition";
 import {deleteInventoryPriceGroupDefinition} from "./DeleteInventoryPriceGroup/definition";
@@ -36,11 +36,12 @@ export const productCatalogDefinition: INodeProperties[] = [
 		type: 'options',
 		displayOptions: {
 			show: {
-				category: [
-					Category.ProductCatalog
+				resource: [
+					Resource.ProductCatalog
 				],
 			},
 		},
+		required: true,
 		options: [
 			// Product catalog
 			{

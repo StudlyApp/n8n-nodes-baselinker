@@ -1,4 +1,4 @@
-export enum Category {
+export enum Resource {
 	ProductCatalog = "productCatalog",
   ExternalStorages = "externalStorages",
 	Orders = "orders",
