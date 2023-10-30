@@ -20,7 +20,7 @@ export class FriendGrid implements INodeType {
 		displayName: 'Baselinker',
 		name: 'friendGrid',
 		// eslint-disable-next-line n8n-nodes-base/node-class-description-icon-not-svg
-		icon: 'file:baseLinker.png',
+		icon: 'file:baselinker-icon.jpg',
 		group: ['transform'],
 		version: 1,
 		subtitle: '={{$parameter["operation"] + ": " + $parameter["resource"]}}',

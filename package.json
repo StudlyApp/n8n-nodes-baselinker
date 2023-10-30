@@ -1,6 +1,6 @@
 {
   "name": "@StudlyApp/n8n-nodes-baselinker",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "n8n node to create contacts in Baselinker",
   "keywords": [
     "n8n-community-node-package"
