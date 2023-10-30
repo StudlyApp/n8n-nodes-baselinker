@@ -51,6 +51,10 @@ export class FriendGrid implements INodeType {
 					{
 						name: 'Orders',
 						value: Category.Orders,
+					},
+					{
+						name: 'Courier Shipments',
+						value: Category.CourierShipments,
 					}
 				],
 				default: Category.ProductCatalog.toString(),
@@ -101,10 +105,14 @@ export class FriendGrid implements INodeType {
 			if (category === Category.Orders) {
 				const result = await ordersExecution(this, apiKey, operation, category, i);
 				responseData.push(result);
-				// continue;
+				continue;
+			}
+			// All operation for Courier Shipments category
+			if (category === Category.CourierShipments) {
+				const result = await ordersExecution(this, apiKey, operation, category, i);
+				responseData.push(result);
 			}
 		}
-
 
 		// Map data to n8n data structure
 		return [this.helpers.returnJsonArray(responseData)];
