@@ -1,6 +1,8 @@
 import {INodeProperties} from "n8n-workflow";
 import {Category, CourierShipmentsMethod} from "../types";
 
+import {createPackageDefinition} from "./CreatePackage/definition";
+
 export const courierShipmentsDefinition: INodeProperties[] = [
 	{
 		displayName: 'Operation',
@@ -15,16 +17,16 @@ export const courierShipmentsDefinition: INodeProperties[] = [
 		},
 		options: [
 			// Courier Shipments
-			// {
-			// 	name: 'Get Journal List',
-			// 	value: OrdersMethod.GetJournalList,
-			// 	description: 'The method allows you to download a list of order events from the last 3 days',
-			// 	action: 'Gets journal list',
-			// },
+			{
+				name: 'Create Package',
+				value: CourierShipmentsMethod.CreatePackage,
+				description: 'The method allows you to create a shipment in the system of the selected courier',
+				action: 'Create a shipment in the system of the selected courier',
+			},
 		],
 		// default: OrdersMethod.GetOrders.toString(),
 		default: '',
 		noDataExpression: true,
 	},
-	// ...
+	...createPackageDefinition,
 ];

@@ -10,6 +10,8 @@ import {externalStoragesDefinition} from "./BaselinkerMethods/ExternalStorages/e
 import {externalStoragesExecution} from "./BaselinkerMethods/ExternalStorages/external.storages.execution";
 import {ordersDefinition} from "./BaselinkerMethods/Orders/orders.definition";
 import {ordersExecution} from "./BaselinkerMethods/Orders/orders.execution";
+import {courierShipmentsDefinition} from "./BaselinkerMethods/CourierShipments/courier.shipments.definition";
+import {courierShipmentsExecution} from "./BaselinkerMethods/CourierShipments/courier.shipments.execution";
 
 
 export class FriendGrid implements INodeType {
@@ -69,7 +71,7 @@ export class FriendGrid implements INodeType {
 			// Orders
 			...ordersDefinition,
 			// Courier shipments
-
+			...courierShipmentsDefinition
 		],
 	};
 	// The execute method will go here
@@ -109,7 +111,7 @@ export class FriendGrid implements INodeType {
 			}
 			// All operation for Courier Shipments category
 			if (category === Category.CourierShipments) {
-				const result = await ordersExecution(this, apiKey, operation, category, i);
+				const result = await courierShipmentsExecution(this, apiKey, operation, category, i);
 				responseData.push(result);
 			}
 		}
