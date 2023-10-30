@@ -1,5 +1,6 @@
 import {INodeProperties} from "n8n-workflow";
 import {Category, OrdersMethod} from "../types";
+
 import {getJournalListDefinition} from "./GetJournalList/definition";
 import {addOrderDefinition} from "./AddOrder/definition";
 import {getOrderSourcesDefinition} from "./GetOrderSources/definition";
@@ -17,7 +18,16 @@ import {getNewReceiptsDefinition} from "./GetNewReceipts/definition";
 import {getReceiptDefinition} from "./GetReceipt/definition";
 import {setOrderFieldsDefinition} from "./SetOrderFields/definition";
 import {addOrderProductDefinition} from "./AddOrderProduct/definition";
-
+import {setOrderProductFieldsDefinition} from "./SetOrderProductFields/definition";
+import {deleteOrderProductDefinition} from "./DeleteOrderProduct/definition";
+import {setOrderPaymentDefinition} from "./SetOrderPayment/definition";
+import {setOrderStatusDefinition} from "./SetOrderStatus/definition";
+import {setOrderStatusesDefinition} from "./SetOrderStatuses/definition";
+import {setOrderReceiptDefinition} from "./SetOrderReceipt/definition";
+import {addOrderInvoiceFileDefinition} from "./AddOrderInvoiceFile/definition";
+import {addOrderReceiptFileDefinition} from "./AddOrderReceiptFile/definition";
+import {getInvoiceFileDefinition} from "./GetInvoiceFile/definition";
+import {runOrderMacroTriggerDefinition} from "./RunOrderMacroTrigger/definition";
 
 export const ordersDefinition: INodeProperties[] = [
 	{
@@ -146,6 +156,66 @@ export const ordersDefinition: INodeProperties[] = [
 				description: 'The method allows you to add a new product to your order',
 				action: 'Add a new product to order',
 			},
+			{
+				name: 'Set Order Product Fields',
+				value: OrdersMethod.SetOrderProductFields,
+				description: 'The method allows you to edit the data of selected items (e.g. prices, quantities etc.) of a specific order. Only the fields that you want to edit should be given, the remaining fields can be omitted in the request.',
+				action: 'Edit selected items of a specific order',
+			},
+			{
+				name: 'Delete Order Product',
+				value: OrdersMethod.DeleteOrderProduct,
+				description: 'The method allows you to remove a specific product from the order',
+				action: 'Remove a specific product from the order',
+			},
+			{
+				name: 'Set Order Payment',
+				value: OrdersMethod.SetOrderPayment,
+				description: 'The method allows you to add a payment to the order',
+				action: 'Add a payment to the order',
+			},
+			{
+				name: 'Set Order Status',
+				value: OrdersMethod.SetOrderStatus,
+				description: 'The method allows you to change order status',
+				action: 'Change order status',
+			},
+			{
+				name: 'Set Order Statuses',
+				value: OrdersMethod.SetOrderStatuses,
+				description: 'The method allows you to batch set orders statuses',
+				action: 'Change orders statuses',
+			},
+			{
+				name: 'Set Order Receipt',
+				value: OrdersMethod.SetOrderReceipt,
+				description: 'The method allows you to mark orders with a receipt already issued',
+				action: 'Mark orders with a receipt already issued',
+			},
+			{
+				name: 'Add Order Invoice File',
+				value: OrdersMethod.AddOrderInvoiceFile,
+				description: 'The method allows you to add an external PDF file to an invoice previously issued from BaseLinker. It enables replacing a standard invoice from BaseLinker with an invoice issued e.g. in an ERP program.',
+				action: 'Add an external pdf file to an invoice previously issued from base linker',
+			},
+			{
+				name: 'Add Order Receipt File',
+				value: OrdersMethod.AddOrderReceiptFile,
+				description: 'The method allows you to add an external PDF file to a receipt previously issued from BaseLinker. It enables replacing a standard receipt from BaseLinker with a receipt issued e.g. in an ERP program.',
+				action: 'Add an external pdf file to a receipt previously issued from base linker',
+			},
+			{
+				name: 'Get Invoice File',
+				value: OrdersMethod.GetInvoiceFile,
+				description: 'The method allows you to get the invoice file from BaseLinker',
+				action: 'Gets the invoice file',
+			},
+			{
+				name: 'Run Order Macro Trigger',
+				value: OrdersMethod.RunOrderMacroTrigger,
+				description: 'The method allows you to run personal trigger for orders automatic actions',
+				action: 'Run personal trigger for orders automatic actions',
+			},
 		],
 		// default: OrdersMethod.GetOrders.toString(),
 		default: '',
@@ -168,4 +238,14 @@ export const ordersDefinition: INodeProperties[] = [
 	...getReceiptDefinition,
 	...setOrderFieldsDefinition,
 	...addOrderProductDefinition,
+	...setOrderProductFieldsDefinition,
+	...deleteOrderProductDefinition,
+	...setOrderPaymentDefinition,
+	...setOrderStatusDefinition,
+	...setOrderStatusesDefinition,
+	...setOrderReceiptDefinition,
+	...addOrderInvoiceFileDefinition,
+	...addOrderReceiptFileDefinition,
+	...getInvoiceFileDefinition,
+	...runOrderMacroTriggerDefinition,
 ];
