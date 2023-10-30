@@ -1,5 +1,5 @@
 import {INodeProperties} from "n8n-workflow";
-import {Category, CourierShipmentsMethod} from "../types";
+import {Resource, CourierShipmentsMethod} from "../types";
 
 import {createPackageDefinition} from "./CreatePackage/definition";
 
@@ -10,8 +10,8 @@ export const courierShipmentsDefinition: INodeProperties[] = [
 		type: 'options',
 		displayOptions: {
 			show: {
-				category: [
-					Category.CourierShipments
+				resource: [
+					Resource.CourierShipments
 				],
 			},
 		},

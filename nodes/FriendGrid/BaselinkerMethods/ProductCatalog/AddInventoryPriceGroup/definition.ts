@@ -1,5 +1,5 @@
 import {INodeProperties} from "n8n-workflow";
-import {Category, ProductCatalogMethod} from "../../types";
+import {Resource, ProductCatalogMethod} from "../../types";
 
 export const addInventoryPriceGroupDefinition: INodeProperties[] = [
 	{
@@ -8,8 +8,8 @@ export const addInventoryPriceGroupDefinition: INodeProperties[] = [
 		type: 'number',
 		displayOptions: {
 			show: {
-				category: [
-					Category.ProductCatalog
+				resource: [
+					Resource.ProductCatalog
 				],
 				operation: [
 					ProductCatalogMethod.AddInventoryPriceGroup
@@ -27,8 +27,8 @@ export const addInventoryPriceGroupDefinition: INodeProperties[] = [
 		required: true,
 		displayOptions: {
 			show: {
-				category: [
-					Category.ProductCatalog
+				resource: [
+					Resource.ProductCatalog
 				],
 				operation: [
 					ProductCatalogMethod.AddInventoryPriceGroup
@@ -49,8 +49,8 @@ export const addInventoryPriceGroupDefinition: INodeProperties[] = [
 		required: true,
 		displayOptions: {
 			show: {
-				category: [
-					Category.ProductCatalog
+				resource: [
+					Resource.ProductCatalog
 				],
 				operation: [
 					ProductCatalogMethod.AddInventoryPriceGroup
@@ -68,8 +68,8 @@ export const addInventoryPriceGroupDefinition: INodeProperties[] = [
 		required: true,
 		displayOptions: {
 			show: {
-				category: [
-					Category.ProductCatalog
+				resource: [
+					Resource.ProductCatalog
 				],
 				operation: [
 					ProductCatalogMethod.AddInventoryPriceGroup

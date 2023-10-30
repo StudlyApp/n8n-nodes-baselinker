@@ -1,5 +1,5 @@
 import {INodeProperties} from "n8n-workflow";
-import {Category, OrdersMethod} from "../../types";
+import {Resource, OrdersMethod} from "../../types";
 
 export const getJournalListDefinition: INodeProperties[] = [
 	{
@@ -9,8 +9,8 @@ export const getJournalListDefinition: INodeProperties[] = [
 		required: true,
 		displayOptions: {
 			show: {
-				category: [
-					Category.Orders
+				resource: [
+					Resource.Orders
 				],
 				operation: [
 					OrdersMethod.GetJournalList
@@ -48,8 +48,8 @@ export const getJournalListDefinition: INodeProperties[] = [
 		],
 		displayOptions: {
 			show: {
-				category: [
-					Category.Orders
+				resource: [
+					Resource.Orders
 				],
 				operation: [
 					OrdersMethod.GetJournalList
@@ -63,8 +63,8 @@ export const getJournalListDefinition: INodeProperties[] = [
 		type: 'number',
 		displayOptions: {
 			show: {
-				category: [
-					Category.Orders
+				resource: [
+					Resource.Orders
 				],
 				operation: [
 					OrdersMethod.GetJournalList

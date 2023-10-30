@@ -1,5 +1,5 @@
 import {INodeProperties} from "n8n-workflow";
-import {Category, OrdersMethod} from "../../types";
+import {Resource, OrdersMethod} from "../../types";
 
 export const addOrderProductDefinition: INodeProperties[] = [
 	{
@@ -9,8 +9,8 @@ export const addOrderProductDefinition: INodeProperties[] = [
 		required: true,
 		displayOptions: {
 			show: {
-				category: [
-					Category.Orders
+				resource: [
+					Resource.Orders
 				],
 				operation: [
 					OrdersMethod.AddOrderProduct
@@ -28,8 +28,8 @@ export const addOrderProductDefinition: INodeProperties[] = [
 		required: true,
 		displayOptions: {
 			show: {
-				category: [
-					Category.Orders
+				resource: [
+					Resource.Orders
 				],
 				operation: [
 					OrdersMethod.AddOrderProduct
@@ -50,8 +50,8 @@ export const addOrderProductDefinition: INodeProperties[] = [
 		required: true,
 		displayOptions: {
 			show: {
-				category: [
-					Category.Orders
+				resource: [
+					Resource.Orders
 				],
 				operation: [
 					OrdersMethod.AddOrderProduct
@@ -72,8 +72,8 @@ export const addOrderProductDefinition: INodeProperties[] = [
 		required: true,
 		displayOptions: {
 			show: {
-				category: [
-					Category.Orders
+				resource: [
+					Resource.Orders
 				],
 				operation: [
 					OrdersMethod.AddOrderProduct
@@ -91,8 +91,8 @@ export const addOrderProductDefinition: INodeProperties[] = [
 		required: true,
 		displayOptions: {
 			show: {
-				category: [
-					Category.Orders
+				resource: [
+					Resource.Orders
 				],
 				operation: [
 					OrdersMethod.AddOrderProduct
@@ -111,8 +111,8 @@ export const addOrderProductDefinition: INodeProperties[] = [
 		default: {},
 		displayOptions: {
 			show: {
-				category: [
-					Category.Orders
+				resource: [
+					Resource.Orders
 				],
 				operation: [
 					OrdersMethod.AddOrderProduct

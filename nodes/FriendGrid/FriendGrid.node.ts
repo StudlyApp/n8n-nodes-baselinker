@@ -2,7 +2,7 @@ import {IExecuteFunctions,} from 'n8n-core';
 
 import {IDataObject, INodeExecutionData, INodeType, INodeTypeDescription,} from 'n8n-workflow';
 
-import {Category, ProductCatalogMethod} from "./BaselinkerMethods/types";
+import {Resource, ProductCatalogMethod} from "./BaselinkerMethods/types";
 
 import {productCatalogDefinition} from "./BaselinkerMethods/ProductCatalog/product.catalog.definition";
 import {productCatalogExecution} from "./BaselinkerMethods/ProductCatalog/product.catalog.execution";
@@ -17,13 +17,14 @@ import {courierShipmentsExecution} from "./BaselinkerMethods/CourierShipments/co
 export class FriendGrid implements INodeType {
 	description: INodeTypeDescription = {
 		// Basic node details will go here
-		displayName: 'FriendGrid',
+		displayName: 'Baselinker',
 		name: 'friendGrid',
 		// eslint-disable-next-line n8n-nodes-base/node-class-description-icon-not-svg
 		icon: 'file:baseLinker.png',
 		group: ['transform'],
 		version: 1,
-		description: 'Consume SendGrid API',
+		subtitle: '={{$parameter["operation"] + ": " + $parameter["resource"]}}',
+		description: 'Sends data to Baselinker',
 		defaults: {
 			name: 'FriendGrid',
 		},
@@ -38,28 +39,28 @@ export class FriendGrid implements INodeType {
 		properties: [
 			// Resources and operations will go here
 			{
-				displayName: 'Category',
-				name: 'category',
+				displayName: 'Resource',
+				name: 'resource',
 				type: 'options',
 				options: [
 					{
 						name: 'Product Catalog',
-						value: Category.ProductCatalog,
+						value: Resource.ProductCatalog,
 					},
 					{
-						name: 'External Storages',
-						value: Category.ExternalStorages,
+						name: 'External Storage',
+						value: Resource.ExternalStorages,
 					},
 					{
-						name: 'Orders',
-						value: Category.Orders,
+						name: 'Order',
+						value: Resource.Orders,
 					},
 					{
-						name: 'Courier Shipments',
-						value: Category.CourierShipments,
+						name: 'Courier Shipment',
+						value: Resource.CourierShipments,
 					}
 				],
-				default: Category.ProductCatalog.toString(),
+				default: Resource.ProductCatalog.toString(),
 				noDataExpression: true,
 				required: true,
 				description: 'Create a new contact',
@@ -78,7 +79,7 @@ export class FriendGrid implements INodeType {
 	async execute(this: IExecuteFunctions): Promise<INodeExecutionData[][]> {
 		// Handle data coming from previous nodes
 		const items = this.getInputData();
-		const category: Category = this.getNodeParameter('category', 0) as Category;
+		const resource: Resource = this.getNodeParameter('resource', 0) as Resource;
 		const operation: ProductCatalogMethod = this.getNodeParameter('operation', 0) as ProductCatalogMethod;
 
 		const credentials = await this.getCredentials('baselinkerApi') as IDataObject;
@@ -87,31 +88,31 @@ export class FriendGrid implements INodeType {
 
 		// For each item, make an API call to create a contact
 		for (let i = 0; i < items.length; i++) {
-			console.log(category);
+			console.log(resource);
 			console.log(operation);
 			console.log(items);
 
-			// All operation for Product Catalog category
-			if (category === Category.ProductCatalog) {
-				const result = await productCatalogExecution(this, apiKey, operation, category, i);
+			// All operation for Product Catalog resource
+			if (resource === Resource.ProductCatalog) {
+				const result = await productCatalogExecution(this, apiKey, operation, resource, i);
 				responseData.push(result);
 				continue;
 			}
-			// All operation for External Storages category
-			if (category === Category.ExternalStorages) {
-				const result = await externalStoragesExecution(this, apiKey, operation, category, i);
+			// All operation for External Storages resource
+			if (resource === Resource.ExternalStorages) {
+				const result = await externalStoragesExecution(this, apiKey, operation, resource, i);
 				responseData.push(result);
 				continue;
 			}
-			// All operation for Orders category
-			if (category === Category.Orders) {
-				const result = await ordersExecution(this, apiKey, operation, category, i);
+			// All operation for Orders resource
+			if (resource === Resource.Orders) {
+				const result = await ordersExecution(this, apiKey, operation, resource, i);
 				responseData.push(result);
 				continue;
 			}
 			// All operation for Courier Shipments category
-			if (category === Category.CourierShipments) {
-				const result = await courierShipmentsExecution(this, apiKey, operation, category, i);
+			if (resource === Resource.CourierShipments) {
+				const result = await courierShipmentsExecution(this, apiKey, operation, resource, i);
 				responseData.push(result);
 			}
 		}

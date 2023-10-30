@@ -1,5 +1,5 @@
 import {INodeProperties} from "n8n-workflow";
-import {Category, OrdersMethod} from "../../types";
+import {Resource, OrdersMethod} from "../../types";
 
 export const setOrderProductFieldsDefinition: INodeProperties[] = [
 	{
@@ -9,8 +9,8 @@ export const setOrderProductFieldsDefinition: INodeProperties[] = [
 		required: true,
 		displayOptions: {
 			show: {
-				category: [
-					Category.Orders
+				resource: [
+					Resource.Orders
 				],
 				operation: [
 					OrdersMethod.SetOrderProductFields
@@ -28,8 +28,8 @@ export const setOrderProductFieldsDefinition: INodeProperties[] = [
 		required: true,
 		displayOptions: {
 			show: {
-				category: [
-					Category.Orders
+				resource: [
+					Resource.Orders
 				],
 				operation: [
 					OrdersMethod.SetOrderProductFields
@@ -48,8 +48,8 @@ export const setOrderProductFieldsDefinition: INodeProperties[] = [
 		default: {},
 		displayOptions: {
 			show: {
-				category: [
-					Category.Orders
+				resource: [
+					Resource.Orders
 				],
 				operation: [
 					OrdersMethod.SetOrderProductFields

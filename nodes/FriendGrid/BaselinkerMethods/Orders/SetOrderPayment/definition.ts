@@ -1,5 +1,5 @@
 import {INodeProperties} from "n8n-workflow";
-import {Category, OrdersMethod} from "../../types";
+import {Resource, OrdersMethod} from "../../types";
 
 export const setOrderPaymentDefinition: INodeProperties[] = [
 	{
@@ -9,8 +9,8 @@ export const setOrderPaymentDefinition: INodeProperties[] = [
 		required: true,
 		displayOptions: {
 			show: {
-				category: [
-					Category.Orders
+				resource: [
+					Resource.Orders
 				],
 				operation: [
 					OrdersMethod.SetOrderPayment
@@ -31,8 +31,8 @@ export const setOrderPaymentDefinition: INodeProperties[] = [
 		required: true,
 		displayOptions: {
 			show: {
-				category: [
-					Category.Orders
+				resource: [
+					Resource.Orders
 				],
 				operation: [
 					OrdersMethod.SetOrderPayment
@@ -50,8 +50,8 @@ export const setOrderPaymentDefinition: INodeProperties[] = [
 		required: true,
 		displayOptions: {
 			show: {
-				category: [
-					Category.Orders
+				resource: [
+					Resource.Orders
 				],
 				operation: [
 					OrdersMethod.SetOrderPayment
@@ -69,8 +69,8 @@ export const setOrderPaymentDefinition: INodeProperties[] = [
 		required: true,
 		displayOptions: {
 			show: {
-				category: [
-					Category.Orders
+				resource: [
+					Resource.Orders
 				],
 				operation: [
 					OrdersMethod.SetOrderPayment
@@ -89,8 +89,8 @@ export const setOrderPaymentDefinition: INodeProperties[] = [
 		default: {},
 		displayOptions: {
 			show: {
-				category: [
-					Category.Orders
+				resource: [
+					Resource.Orders
 				],
 				operation: [
 					OrdersMethod.SetOrderPayment

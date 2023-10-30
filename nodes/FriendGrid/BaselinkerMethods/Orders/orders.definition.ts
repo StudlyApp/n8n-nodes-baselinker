@@ -1,5 +1,5 @@
 import {INodeProperties} from "n8n-workflow";
-import {Category, OrdersMethod} from "../types";
+import {Resource, OrdersMethod} from "../types";
 
 import {getJournalListDefinition} from "./GetJournalList/definition";
 import {addOrderDefinition} from "./AddOrder/definition";
@@ -36,8 +36,8 @@ export const ordersDefinition: INodeProperties[] = [
 		type: 'options',
 		displayOptions: {
 			show: {
-				category: [
-					Category.Orders
+				resource: [
+					Resource.Orders
 				],
 			},
 		},

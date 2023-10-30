@@ -1,5 +1,5 @@
 import {INodeProperties} from "n8n-workflow";
-import {Category, OrdersMethod} from "../../types";
+import {Resource, OrdersMethod} from "../../types";
 
 export const addOrderInvoiceFileDefinition: INodeProperties[] = [
 	{
@@ -9,8 +9,8 @@ export const addOrderInvoiceFileDefinition: INodeProperties[] = [
 		required: true,
 		displayOptions: {
 			show: {
-				category: [
-					Category.Orders
+				resource: [
+					Resource.Orders
 				],
 				operation: [
 					OrdersMethod.AddOrderInvoiceFile
@@ -28,8 +28,8 @@ export const addOrderInvoiceFileDefinition: INodeProperties[] = [
 		required: true,
 		displayOptions: {
 			show: {
-				category: [
-					Category.Orders
+				resource: [
+					Resource.Orders
 				],
 				operation: [
 					OrdersMethod.AddOrderInvoiceFile
@@ -47,8 +47,8 @@ export const addOrderInvoiceFileDefinition: INodeProperties[] = [
 		required: true,
 		displayOptions: {
 			show: {
-				category: [
-					Category.Orders
+				resource: [
+					Resource.Orders
 				],
 				operation: [
 					OrdersMethod.AddOrderInvoiceFile

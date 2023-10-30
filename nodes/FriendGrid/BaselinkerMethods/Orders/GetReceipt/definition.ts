@@ -1,5 +1,5 @@
 import {INodeProperties} from "n8n-workflow";
-import {Category, OrdersMethod} from "../../types";
+import {Resource, OrdersMethod} from "../../types";
 
 export const getReceiptDefinition: INodeProperties[] = [
 	{
@@ -8,8 +8,8 @@ export const getReceiptDefinition: INodeProperties[] = [
 		type: 'number',
 		displayOptions: {
 			show: {
-				category: [
-					Category.Orders
+				resource: [
+					Resource.Orders
 				],
 				operation: [
 					OrdersMethod.GetReceipt
@@ -25,8 +25,8 @@ export const getReceiptDefinition: INodeProperties[] = [
 		type: 'number',
 		displayOptions: {
 			show: {
-				category: [
-					Category.Orders
+				resource: [
+					Resource.Orders
 				],
 				operation: [
 					OrdersMethod.GetReceipt

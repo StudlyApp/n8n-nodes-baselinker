@@ -1,5 +1,5 @@
 import {INodeProperties} from "n8n-workflow";
-import {Category, CourierShipmentsMethod} from "../../types";
+import {Resource, CourierShipmentsMethod} from "../../types";
 
 export const createPackageDefinition: INodeProperties[] = [
 	{
@@ -9,8 +9,8 @@ export const createPackageDefinition: INodeProperties[] = [
 		required: true,
 		displayOptions: {
 			show: {
-				category: [
-					Category.CourierShipments
+				resource: [
+					Resource.CourierShipments
 				],
 				operation: [
 					CourierShipmentsMethod.CreatePackage
@@ -28,8 +28,8 @@ export const createPackageDefinition: INodeProperties[] = [
 		required: true,
 		displayOptions: {
 			show: {
-				category: [
-					Category.CourierShipments
+				resource: [
+					Resource.CourierShipments
 				],
 				operation: [
 					CourierShipmentsMethod.CreatePackage
@@ -104,8 +104,8 @@ export const createPackageDefinition: INodeProperties[] = [
 		],
 		displayOptions: {
 			show: {
-				category: [
-					Category.CourierShipments
+				resource: [
+					Resource.CourierShipments
 				],
 				operation: [
 					CourierShipmentsMethod.CreatePackage
@@ -121,8 +121,8 @@ export const createPackageDefinition: INodeProperties[] = [
 		default: {},
 		displayOptions: {
 			show: {
-				category: [
-					Category.CourierShipments
+				resource: [
+					Resource.CourierShipments
 				],
 				operation: [
 					CourierShipmentsMethod.CreatePackage
@@ -187,8 +187,8 @@ export const createPackageDefinition: INodeProperties[] = [
 				],
 				displayOptions: {
 					show: {
-						category: [
-							Category.CourierShipments
+						resource: [
+							Resource.CourierShipments
 						],
 						operation: [
 							CourierShipmentsMethod.CreatePackage

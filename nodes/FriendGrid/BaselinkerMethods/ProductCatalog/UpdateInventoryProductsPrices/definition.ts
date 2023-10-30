@@ -1,5 +1,5 @@
 import {INodeProperties} from "n8n-workflow";
-import {Category, ProductCatalogMethod} from "../../types";
+import {Resource, ProductCatalogMethod} from "../../types";
 
 export const updateInventoryProductsPricesDefinition: INodeProperties[] = [
 	{
@@ -9,8 +9,8 @@ export const updateInventoryProductsPricesDefinition: INodeProperties[] = [
 		required: true,
 		displayOptions: {
 			show: {
-				category: [
-					Category.ProductCatalog
+				resource: [
+					Resource.ProductCatalog
 				],
 				operation: [
 					ProductCatalogMethod.UpdateInventoryProductsPrices
@@ -83,8 +83,8 @@ export const updateInventoryProductsPricesDefinition: INodeProperties[] = [
 		],
 		displayOptions: {
 			show: {
-				category: [
-					Category.ProductCatalog
+				resource: [
+					Resource.ProductCatalog
 				],
 				operation: [
 					ProductCatalogMethod.UpdateInventoryProductsPrices

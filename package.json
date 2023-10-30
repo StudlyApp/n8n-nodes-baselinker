@@ -1,7 +1,7 @@
 {
-  "name": "n8n-nodes-friendgrid",
+  "name": "@StudlyApp/n8n-nodes-baselinker",
   "version": "0.1.0",
-  "description": "n8n node to create contacts in SendGrid",
+  "description": "n8n node to create contacts in Baselinker",
   "keywords": [
     "n8n-community-node-package"
   ],
@@ -50,5 +50,8 @@
   },
   "dependencies": {
     "zod": "^3.22.4"
+  },
+  "publishConfig": {
+    "@StudlyApp:registry": "https://npm.pkg.github.com"
   }
 }
