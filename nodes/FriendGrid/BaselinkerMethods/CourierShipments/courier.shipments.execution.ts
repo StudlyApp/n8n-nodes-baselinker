@@ -14,12 +14,6 @@ export async function courierShipmentsExecution(
 		const schema = zod.object({
 			order_id: zod.number(),
 			courier_code: zod.string(),
-			fields: zod.array(
-				zod.object({
-					id: zod.string(),
-					value: zod.string()
-				})
-			),
 			packages: zod.array(
 				zod.record(zod.string(), zod.number())
 			),
@@ -27,6 +21,12 @@ export async function courierShipmentsExecution(
 
 		const schemaAdditionalFields = zod.object({
 			account_id: zod.number().nullish(),
+			fields: zod.array(
+				zod.object({
+					id: zod.string(),
+					value: zod.string()
+				})
+			).nullish()
 		})
 
 		const metadataArraySchemaForFields = zod.array(zod.object({
@@ -38,14 +38,19 @@ export async function courierShipmentsExecution(
 			metadataValues: metadataArraySchemaForFields,
 		})
 
-		const fields = metadataObjectSchemaForFields.parse(
-			data.getNodeParameter('fields', i)).metadataValues?.map(el => {
-				return {
-					"id": el.id,
-					"value": el.value,
+		const additionalFields = data.getNodeParameter('additionalFields', i);
+
+		let preparedArrayForFields = undefined;
+		if (additionalFields.fields !== undefined) {
+			preparedArrayForFields = metadataObjectSchemaForFields.parse(additionalFields.fields).
+			metadataValues?.map(el => {
+					return {
+						"id": el.id,
+						"value": el.value,
+					}
 				}
-			}
-		);
+			);
+		}
 
 		const metadataArraySchemaForPackages = zod.array(zod.object({
 			value: zod.object({
@@ -60,17 +65,21 @@ export async function courierShipmentsExecution(
 			metadataValues: metadataArraySchemaForPackages,
 		})
 
-		const packages = metadataObjectSchemaForPackages.parse(data.getNodeParameter('packages', i)).metadataValues.
+		let preparedArrayForPackages = undefined;
+		if (Object.getOwnPropertyNames(data.getNodeParameter('packages', i)).length > 0) {
+			preparedArrayForPackages = metadataObjectSchemaForPackages.parse(data.getNodeParameter('packages', i)).metadataValues.
 			reduce((prev, curr) => {
 				const reducedMetadataValues = curr.value.metadataValues.reduce((prev2, curr2) => {
 					prev2[curr2.id] = curr2.value;
 					return prev2;
 				}, {} as Record<string, number>)
-			prev.push(reducedMetadataValues);
-			return prev;
-		}, [] as Array<Record<string, number>>)
-
-		const additionalFields = data.getNodeParameter('additionalFields', i);
+				prev.push(reducedMetadataValues);
+				return prev;
+			}, [] as Array<Record<string, number>>)
+		} else {
+			throw new Error('🚨 Weight of at least one shipment required! \n' +
+				'Add Package -> Choose...')
+		}
 
 		return await createPackageExecution({
 			apiKey: apiKey,
@@ -78,11 +87,11 @@ export async function courierShipmentsExecution(
 				...schema.parse({
 					order_id: data.getNodeParameter('order_id', i),
 					courier_code: data.getNodeParameter('courier_code', i),
-					fields,
-					packages,
+					packages: preparedArrayForPackages,
 				}),
 				...schemaAdditionalFields.parse({
 					account_id: additionalFields.account_id,
+					fields: preparedArrayForFields,
 				})
 			}
 		});

@@ -40,7 +40,7 @@ export const createPackageDefinition: INodeProperties[] = [
 		placeholder: 'dhl',
 	},
 	{
-		displayName: 'Packages',
+		displayName: 'Packages (Required)',
 		name: 'packages',
 		placeholder: 'Add Package',
 		type: 'fixedCollection',
@@ -140,7 +140,7 @@ export const createPackageDefinition: INodeProperties[] = [
 					'If blank, the first account will be used.',
 			},
 			{
-				displayName: 'Fields',
+				displayName: 'Fields (Optional)',
 				name: 'fields',
 				placeholder: 'Add Field',
 				type: 'fixedCollection',
@@ -185,16 +185,6 @@ export const createPackageDefinition: INodeProperties[] = [
 						],
 					},
 				],
-				displayOptions: {
-					show: {
-						resource: [
-							Resource.CourierShipments
-						],
-						operation: [
-							CourierShipmentsMethod.CreatePackage
-						],
-					},
-				},
 			},
 		],
 	},
