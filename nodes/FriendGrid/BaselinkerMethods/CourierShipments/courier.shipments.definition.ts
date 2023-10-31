@@ -5,6 +5,7 @@ import {createPackageDefinition} from "./CreatePackage/definition";
 import {createPackageManualDefinition} from "./CreatePackageManual/definition";
 import {getCouriersListDefinition} from "./GetCouriersList/definition";
 import {getCourierFieldsDefinition} from "./GetCourierFields/definition";
+import {getCourierServicesDefinition} from "./GetCourierServices/definition";
 
 export const courierShipmentsDefinition: INodeProperties[] = [
 	{
@@ -44,6 +45,12 @@ export const courierShipmentsDefinition: INodeProperties[] = [
 				description: 'The method allows you to retrieve the form fields for creating shipments for the selected courier',
 				action: 'Gets the form fields for creating shipments for the selected courier',
 			},
+			{
+				name: 'Get Courier Services',
+				value: CourierShipmentsMethod.GetCourierServices,
+				description: 'The method allows you to retrieve additional courier services, which depend on other shipment settings. Used only for X-press, BrokerSystem, Wysyłam z Allegro, ErliPRO couriers. Not applicable to other couriers whose forms have fixed options. The details of the package should be sent with the method (the format as in createPackage) in order to receive a list of additional services',
+				action: 'Gets additional courier services which depend on other shipment settings',
+			},
 		],
 		// default: OrdersMethod.GetOrders.toString(),
 		default: '',
@@ -53,4 +60,5 @@ export const courierShipmentsDefinition: INodeProperties[] = [
 	...createPackageManualDefinition,
 	...getCouriersListDefinition,
 	...getCourierFieldsDefinition,
+	...getCourierServicesDefinition,
 ];

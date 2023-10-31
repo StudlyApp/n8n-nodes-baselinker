@@ -6,6 +6,7 @@ import {createPackageExecution} from "./CreatePackage/execution";
 import {createPackageManualExecution} from "./CreatePackageManual/execution";
 import {getCouriersListExecution} from "./GetCouriersList/execution";
 import {getCourierFieldsExecution} from "./GetCourierFields/execution";
+import {getCourierServicesExecution} from "./GetCourierServices/execution";
 
 export async function courierShipmentsExecution(
 	data: IExecuteFunctions,
@@ -147,6 +148,97 @@ export async function courierShipmentsExecution(
 			input: schema.parse({
 					courier_code: data.getNodeParameter('courier_code', i),
 				}),
+		});
+	}
+
+	if (operation === CourierShipmentsMethod.GetCourierServices) {
+		const schema = zod.object({
+			order_id: zod.number(),
+			courier_code: zod.string(),
+		});
+
+		const schemaAdditionalFields = zod.object({
+			account_id: zod.number().nullish(),
+			fields: zod.array(
+				zod.object({
+					id: zod.string(),
+					value: zod.string()
+				})
+			).nullish(),
+			packages: zod.array(
+				zod.record(zod.string(), zod.number())
+			).nullish()
+		})
+
+		const metadataArraySchemaForFields = zod.array(zod.object({
+			id: zod.string(),
+			value: zod.string(),
+		}))
+
+		const metadataObjectSchemaForFields = zod.object({
+			metadataValues: metadataArraySchemaForFields,
+		})
+
+		const additionalFields = data.getNodeParameter('additionalFields', i);
+
+		let preparedArrayForFields = undefined;
+		console.log(JSON.stringify(additionalFields.fields))
+		if (additionalFields.fields !== undefined) {
+			preparedArrayForFields = metadataObjectSchemaForFields.parse(additionalFields.fields).
+			metadataValues?.map(el => {
+					return {
+						"id": el.id,
+						"value": el.value,
+					}
+				}
+			);
+		}
+
+		const metadataArraySchemaForPackages = zod.array(zod.object({
+			value: zod.object({
+				metadataValues: zod.array(zod.object({
+					id: zod.string(),
+					value: zod.number()
+				}))
+			})
+		}))
+
+		const metadataObjectSchemaForPackages = zod.object({
+			metadataValues: metadataArraySchemaForPackages,
+		})
+
+		let preparedArrayForPackages = undefined;
+		console.log(JSON.stringify(additionalFields.fields))
+		if (additionalFields.packages !== undefined) {
+			if (Object.getOwnPropertyNames(additionalFields.packages).length > 0) {
+				preparedArrayForPackages = metadataObjectSchemaForPackages.parse(additionalFields.packages).metadataValues.
+				reduce((prev, curr) => {
+					const reducedMetadataValues = curr.value.metadataValues.reduce((prev2, curr2) => {
+						prev2[curr2.id] = curr2.value;
+						return prev2;
+					}, {} as Record<string, number>)
+					prev.push(reducedMetadataValues);
+					return prev;
+				}, [] as Array<Record<string, number>>)
+			} else {
+				throw new Error('🚨 Weight of at least one shipment required! \n' +
+					'Add Package -> Choose...')
+			}
+		}
+
+		return await getCourierServicesExecution({
+			apiKey: apiKey,
+			input: {
+				...schema.parse({
+					order_id: data.getNodeParameter('order_id', i),
+					courier_code: data.getNodeParameter('courier_code', i),
+				}),
+				...schemaAdditionalFields.parse({
+					account_id: additionalFields.account_id,
+					fields: preparedArrayForFields,
+					packages: preparedArrayForPackages,
+				})
+			}
 		});
 	}
 }
