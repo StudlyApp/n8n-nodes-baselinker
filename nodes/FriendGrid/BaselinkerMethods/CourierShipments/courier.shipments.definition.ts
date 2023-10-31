@@ -10,6 +10,7 @@ import {getCourierAccountsDefinition} from "./GetCourierAccounts/definition";
 import {getLabelDefinition} from "./GetLabel/definition";
 import {getProtocolDefinition} from "./GetProtocol/definition";
 import {getOrderPackagesDefinition} from "./GetOrderPackages/definition";
+import {getCourierPackagesStatusHistoryDefinition} from "./GetCourierPackagesStatusHistory/definition";
 
 export const courierShipmentsDefinition: INodeProperties[] = [
 	{
@@ -79,6 +80,12 @@ export const courierShipmentsDefinition: INodeProperties[] = [
 				description: 'The method allows you to download shipments previously created for the selected order',
 				action: 'Gets shipments previously created for the selected order',
 			},
+			{
+				name: 'Get Courier Packages Status History',
+				value: CourierShipmentsMethod.GetCourierPackagesStatusHistory,
+				description: 'The method allows you to retrieve the history of the status list of the given shipments. Maximum 100 shipments at a time.',
+				action: 'Gets history of the status list of the given shipments',
+			},
 		],
 		// default: OrdersMethod.GetOrders.toString(),
 		default: '',
@@ -93,4 +100,5 @@ export const courierShipmentsDefinition: INodeProperties[] = [
 	...getLabelDefinition,
 	...getProtocolDefinition,
 	...getOrderPackagesDefinition,
+	...getCourierPackagesStatusHistoryDefinition,
 ];

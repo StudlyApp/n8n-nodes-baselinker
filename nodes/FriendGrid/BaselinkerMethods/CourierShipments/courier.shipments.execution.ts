@@ -11,6 +11,7 @@ import {getCourierAccountsExecution} from "./GetCourierAccounts/execution";
 import {getLabelExecution} from "./GetLabel/execution";
 import {getProtocolExecution} from "./GetProtocol/execution";
 import {getOrderPackagesExecution} from "./GetOrderPackages/execution";
+import {getCourierPackagesStatusHistoryExecution} from "./GetCourierPackagesStatusHistory/execution";
 
 export async function courierShipmentsExecution(
 	data: IExecuteFunctions,
@@ -337,6 +338,37 @@ export async function courierShipmentsExecution(
 			input: schema.parse({
 				order_id: data.getNodeParameter('order_id', i),
 			}),
+		});
+	}
+
+	if (operation === CourierShipmentsMethod.GetCourierPackagesStatusHistory) {
+		const schema = zod.object({
+			package_ids: zod.array(zod.number()),
+		});
+
+		const metadataArraySchema = zod.array(zod.object({
+			package_id: zod.number().optional(),
+		}))
+
+		const metadataObjectSchema = zod.object({
+			metadataValues: metadataArraySchema,
+		})
+
+		let preparedArrayForPackageIDs = undefined;
+		if (Object.getOwnPropertyNames(data.getNodeParameter('package_ids', i)).length > 0) {
+			preparedArrayForPackageIDs = metadataObjectSchema.parse(data.getNodeParameter('package_ids', i)).
+			metadataValues.map(el => el.package_id);
+		}
+
+		if (preparedArrayForPackageIDs === undefined) {
+			throw new Error('🚨 package_ids is required (Add Package ID)')
+		}
+
+		return await getCourierPackagesStatusHistoryExecution({
+			apiKey: apiKey,
+			input: schema.parse({
+				package_ids: preparedArrayForPackageIDs,
+			})
 		});
 	}
 }
