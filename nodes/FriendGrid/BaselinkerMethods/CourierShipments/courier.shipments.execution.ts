@@ -10,6 +10,7 @@ import {getCourierServicesExecution} from "./GetCourierServices/execution";
 import {getCourierAccountsExecution} from "./GetCourierAccounts/execution";
 import {getLabelExecution} from "./GetLabel/execution";
 import {getProtocolExecution} from "./GetProtocol/execution";
+import {getOrderPackagesExecution} from "./GetOrderPackages/execution";
 
 export async function courierShipmentsExecution(
 	data: IExecuteFunctions,
@@ -324,5 +325,18 @@ export async function courierShipmentsExecution(
 		} else {
 			throw new Error("🚨 One of optional fields (Package IDs, Package Numbers) is required!");
 		}
+	}
+
+	if (operation === CourierShipmentsMethod.GetOrderPackages) {
+		const schema = zod.object({
+			order_id: zod.number(),
+		});
+
+		return await getOrderPackagesExecution({
+			apiKey: apiKey,
+			input: schema.parse({
+				order_id: data.getNodeParameter('order_id', i),
+			}),
+		});
 	}
 }
