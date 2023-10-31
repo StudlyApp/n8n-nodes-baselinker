@@ -3,6 +3,7 @@ import {Resource, CourierShipmentsMethod} from "../types";
 
 import {createPackageDefinition} from "./CreatePackage/definition";
 import {createPackageManualDefinition} from "./CreatePackageManual/definition";
+import {getCouriersListDefinition} from "./GetCouriersList/definition";
 
 export const courierShipmentsDefinition: INodeProperties[] = [
 	{
@@ -30,6 +31,12 @@ export const courierShipmentsDefinition: INodeProperties[] = [
 				description: 'The method allows you to enter the shipping number and the name of the courier to the order (function used only to add shipments created outside BaseLinker)',
 				action: 'Add the shipping number and the name of the courier to the order',
 			},
+			{
+				name: 'Get Couriers List',
+				value: CourierShipmentsMethod.GetCouriersList,
+				description: 'The method allows you to retrieve a list of available couriers',
+				action: 'Gets a list of available couriers',
+			},
 		],
 		// default: OrdersMethod.GetOrders.toString(),
 		default: '',
@@ -37,4 +44,5 @@ export const courierShipmentsDefinition: INodeProperties[] = [
 	},
 	...createPackageDefinition,
 	...createPackageManualDefinition,
+	...getCouriersListDefinition,
 ];

@@ -1,8 +1,10 @@
 import {IExecuteFunctions} from "n8n-core";
 import {CourierShipmentsMethod} from "../types";
 import zod from "zod";
+
 import {createPackageExecution} from "./CreatePackage/execution";
 import {createPackageManualExecution} from "./CreatePackageManual/execution";
+import {getCouriersListExecution} from "./GetCouriersList/execution";
 
 export async function courierShipmentsExecution(
 	data: IExecuteFunctions,
@@ -125,6 +127,12 @@ export async function courierShipmentsExecution(
 					return_shipment: additionalFields.return_shipment,
 				})
 			}
+		});
+	}
+
+	if (operation === CourierShipmentsMethod.GetCouriersList) {
+		return await getCouriersListExecution({
+			apiKey: apiKey,
 		});
 	}
 }
