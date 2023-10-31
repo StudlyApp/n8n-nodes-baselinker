@@ -12,6 +12,7 @@ import {getProtocolDefinition} from "./GetProtocol/definition";
 import {getOrderPackagesDefinition} from "./GetOrderPackages/definition";
 import {getCourierPackagesStatusHistoryDefinition} from "./GetCourierPackagesStatusHistory/definition";
 import {deleteCourierPackageDefinition} from "./DeleteCourierPackage/definition";
+import {requestParcelPickupDefinition} from "./RequestParcelPickup/definition";
 
 export const courierShipmentsDefinition: INodeProperties[] = [
 	{
@@ -93,6 +94,12 @@ export const courierShipmentsDefinition: INodeProperties[] = [
 				description: 'The method allows you to delete a previously created shipment. The method removes the shipment from the BaseLinker system and from the courier system if the courier API allows it.',
 				action: 'Remove a previously created shipment',
 			},
+			{
+				name: 'Request Parcel Pickup',
+				value: CourierShipmentsMethod.RequestParcelPickup,
+				description: 'The method allows you to request a parcel pickup for previously created shipments. The method sends a parcel pickup request to courier API if the courier API allows it.',
+				action: 'Request a parcel pickup for previously created shipments',
+			},
 		],
 		// default: OrdersMethod.GetOrders.toString(),
 		default: '',
@@ -109,4 +116,5 @@ export const courierShipmentsDefinition: INodeProperties[] = [
 	...getOrderPackagesDefinition,
 	...getCourierPackagesStatusHistoryDefinition,
 	...deleteCourierPackageDefinition,
+	...requestParcelPickupDefinition
 ];

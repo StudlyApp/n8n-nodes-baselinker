@@ -13,6 +13,7 @@ import {getProtocolExecution} from "./GetProtocol/execution";
 import {getOrderPackagesExecution} from "./GetOrderPackages/execution";
 import {getCourierPackagesStatusHistoryExecution} from "./GetCourierPackagesStatusHistory/execution";
 import {deleteCourierPackageExecution} from "./DeleteCourierPackage/execution";
+import {requestParcelPickupExecution} from "./RequestParcelPickup/execution";
 
 export async function courierShipmentsExecution(
 	data: IExecuteFunctions,
@@ -405,6 +406,87 @@ export async function courierShipmentsExecution(
 			});
 		} else {
 			throw new Error('🚨 One of optional fields (package_id or package_number) is required!')
+		}
+	}
+
+	if (operation === CourierShipmentsMethod.RequestParcelPickup) {
+		const schema = zod.object({
+			courier_code: zod.string(),
+			package_ids: zod.array(zod.number()).nullish(),
+			package_numbers: zod.array(zod.string()).nullish(),
+			account_id: zod.number()
+		});
+
+		const schemaAdditionalFields = zod.object({
+			fields: zod.array(
+				zod.object({
+					id: zod.string(),
+					value: zod.string()
+				})
+			).nullish()
+		})
+
+		const metadataArraySchema = zod.array(zod.object({
+			package_id: zod.number().optional(),
+			package_number: zod.string().optional(),
+		}))
+
+		const metadataObjectSchema = zod.object({
+			metadataValues: metadataArraySchema,
+		})
+
+		let preparedArrayForPackageIDs = undefined;
+		if (Object.getOwnPropertyNames(data.getNodeParameter('package_ids', i)).length > 0) {
+			preparedArrayForPackageIDs = metadataObjectSchema.parse(data.getNodeParameter('package_ids', i)).
+			metadataValues.map(el => el.package_id);
+		}
+
+		let preparedArrayForPackageNumbers = undefined;
+		if (Object.getOwnPropertyNames(data.getNodeParameter('package_numbers', i)).length > 0) {
+			preparedArrayForPackageNumbers = metadataObjectSchema.parse(data.getNodeParameter('package_numbers', i)).
+			metadataValues.map(el => el.package_number);
+		}
+
+		const metadataArraySchemaForFields = zod.array(zod.object({
+			id: zod.string(),
+			value: zod.string(),
+		}))
+
+		const metadataObjectSchemaForFields = zod.object({
+			metadataValues: metadataArraySchemaForFields,
+		})
+
+		const additionalFields = data.getNodeParameter('additionalFields', i);
+
+		let preparedArrayForFields = undefined;
+		if (additionalFields.fields !== undefined) {
+			preparedArrayForFields = metadataObjectSchemaForFields.parse(additionalFields.fields).
+			metadataValues?.map(el => {
+					return {
+						"id": el.id,
+						"value": el.value,
+					}
+				}
+			);
+		}
+
+		if (preparedArrayForPackageIDs !== undefined || preparedArrayForPackageNumbers !== undefined) {
+			return await requestParcelPickupExecution({
+				apiKey: apiKey,
+				input: {
+					...schema.parse({
+						courier_code: data.getNodeParameter('courier_code', i),
+						package_ids: preparedArrayForPackageIDs,
+						package_numbers: preparedArrayForPackageNumbers,
+						account_id: data.getNodeParameter('account_id', i)
+					}),
+					...schemaAdditionalFields.parse({
+						fields: preparedArrayForFields,
+					})
+				}
+			});
+		} else {
+			throw new Error("🚨 One of optional fields (Package IDs, Package Numbers) is required!");
 		}
 	}
 }
