@@ -8,6 +8,7 @@ import {getCouriersListExecution} from "./GetCouriersList/execution";
 import {getCourierFieldsExecution} from "./GetCourierFields/execution";
 import {getCourierServicesExecution} from "./GetCourierServices/execution";
 import {getCourierAccountsExecution} from "./GetCourierAccounts/execution";
+import {getLabelExecution} from "./GetLabel/execution";
 
 export async function courierShipmentsExecution(
 	data: IExecuteFunctions,
@@ -254,5 +255,29 @@ export async function courierShipmentsExecution(
 				courier_code: data.getNodeParameter('courier_code', i),
 			}),
 		});
+	}
+
+	if (operation === CourierShipmentsMethod.GetLabel) {
+		const schema = zod.object({
+			courier_code: zod.string(),
+			package_id: zod.number().nullish(),
+			package_number: zod.string().nullish(),
+		});
+
+		const package_id = data.getNodeParameter('package_id', i);
+		const package_number = data.getNodeParameter('package_number', i);
+
+		if ((package_id === undefined && package_number !== undefined) || (package_number === undefined && package_id !== undefined)) {
+			return await getLabelExecution({
+				apiKey: apiKey,
+				input: schema.parse({
+					courier_code: data.getNodeParameter('courier_code', i),
+					package_id: data.getNodeParameter('package_id', i),
+					package_number: data.getNodeParameter('package_number', i),
+				}),
+			});
+		} else {
+			throw new Error('🚨 One of optional fields (package_id or package_number) is required!')
+		}
 	}
 }
