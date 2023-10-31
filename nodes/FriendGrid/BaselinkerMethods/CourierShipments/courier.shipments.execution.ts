@@ -9,6 +9,7 @@ import {getCourierFieldsExecution} from "./GetCourierFields/execution";
 import {getCourierServicesExecution} from "./GetCourierServices/execution";
 import {getCourierAccountsExecution} from "./GetCourierAccounts/execution";
 import {getLabelExecution} from "./GetLabel/execution";
+import {getProtocolExecution} from "./GetProtocol/execution";
 
 export async function courierShipmentsExecution(
 	data: IExecuteFunctions,
@@ -278,6 +279,50 @@ export async function courierShipmentsExecution(
 			});
 		} else {
 			throw new Error('🚨 One of optional fields (package_id or package_number) is required!')
+		}
+	}
+
+	if (operation === CourierShipmentsMethod.GetProtocol) {
+		const schema = zod.object({
+			courier_code: zod.string(),
+			package_ids: zod.array(zod.number()).nullish(),
+			package_numbers: zod.array(zod.string()).nullish(),
+			account_id: zod.number()
+		});
+
+		const metadataArraySchema = zod.array(zod.object({
+			package_id: zod.number().optional(),
+			package_number: zod.string().optional(),
+		}))
+
+		const metadataObjectSchema = zod.object({
+			metadataValues: metadataArraySchema,
+		})
+
+		let preparedArrayForPackageIDs = undefined;
+		if (Object.getOwnPropertyNames(data.getNodeParameter('package_ids', i)).length > 0) {
+			preparedArrayForPackageIDs = metadataObjectSchema.parse(data.getNodeParameter('package_ids', i)).
+				metadataValues.map(el => el.package_id);
+		}
+
+		let preparedArrayForPackageNumbers = undefined;
+		if (Object.getOwnPropertyNames(data.getNodeParameter('package_numbers', i)).length > 0) {
+			preparedArrayForPackageNumbers = metadataObjectSchema.parse(data.getNodeParameter('package_numbers', i)).
+			metadataValues.map(el => el.package_number);
+		}
+
+		if (preparedArrayForPackageIDs !== undefined || preparedArrayForPackageNumbers !== undefined) {
+			return await getProtocolExecution({
+				apiKey: apiKey,
+				input: schema.parse({
+					courier_code: data.getNodeParameter('courier_code', i),
+					package_ids: preparedArrayForPackageIDs,
+					package_numbers: preparedArrayForPackageNumbers,
+					account_id: data.getNodeParameter('account_id', i)
+				})
+			});
+		} else {
+			throw new Error("🚨 One of optional fields (Package IDs, Package Numbers) is required!");
 		}
 	}
 }

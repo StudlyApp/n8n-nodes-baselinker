@@ -8,6 +8,7 @@ import {getCourierFieldsDefinition} from "./GetCourierFields/definition";
 import {getCourierServicesDefinition} from "./GetCourierServices/definition";
 import {getCourierAccountsDefinition} from "./GetCourierAccounts/definition";
 import {getLabelDefinition} from "./GetLabel/definition";
+import {getProtocolDefinition} from "./GetProtocol/definition";
 
 export const courierShipmentsDefinition: INodeProperties[] = [
 	{
@@ -63,7 +64,13 @@ export const courierShipmentsDefinition: INodeProperties[] = [
 				name: 'Get Label',
 				value: CourierShipmentsMethod.GetLabel,
 				description: 'The method allows you to download a shipping label (consignment) for a selected shipment',
-				action: 'Download a shipping label for a selected shipment',
+				action: 'Gets a shipping label for a selected shipment',
+			},
+			{
+				name: 'Get Protocol',
+				value: CourierShipmentsMethod.GetProtocol,
+				description: 'The method allows you to download a parcel protocol for selected shipments if the protocol is available for chosen courier',
+				action: 'Gets a parcel protocol for selected shipments',
 			},
 		],
 		// default: OrdersMethod.GetOrders.toString(),
@@ -77,4 +84,5 @@ export const courierShipmentsDefinition: INodeProperties[] = [
 	...getCourierServicesDefinition,
 	...getCourierAccountsDefinition,
 	...getLabelDefinition,
+	...getProtocolDefinition,
 ];
