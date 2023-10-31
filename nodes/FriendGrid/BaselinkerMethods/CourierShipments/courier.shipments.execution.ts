@@ -14,6 +14,7 @@ import {getOrderPackagesExecution} from "./GetOrderPackages/execution";
 import {getCourierPackagesStatusHistoryExecution} from "./GetCourierPackagesStatusHistory/execution";
 import {deleteCourierPackageExecution} from "./DeleteCourierPackage/execution";
 import {requestParcelPickupExecution} from "./RequestParcelPickup/execution";
+import {getRequestParcelPickupFieldsExecution} from "./GetRequestParcelPickupFields/execution";
 
 export async function courierShipmentsExecution(
 	data: IExecuteFunctions,
@@ -488,5 +489,18 @@ export async function courierShipmentsExecution(
 		} else {
 			throw new Error("🚨 One of optional fields (Package IDs, Package Numbers) is required!");
 		}
+	}
+
+	if (operation === CourierShipmentsMethod.GetRequestParcelPickupFields) {
+		const schema = zod.object({
+			courier_code: zod.string(),
+		});
+
+		return await getRequestParcelPickupFieldsExecution({
+			apiKey: apiKey,
+			input: schema.parse({
+				courier_code: data.getNodeParameter('courier_code', i),
+			}),
+		});
 	}
 }

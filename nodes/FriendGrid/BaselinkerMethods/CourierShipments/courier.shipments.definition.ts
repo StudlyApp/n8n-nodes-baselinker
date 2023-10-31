@@ -13,6 +13,7 @@ import {getOrderPackagesDefinition} from "./GetOrderPackages/definition";
 import {getCourierPackagesStatusHistoryDefinition} from "./GetCourierPackagesStatusHistory/definition";
 import {deleteCourierPackageDefinition} from "./DeleteCourierPackage/definition";
 import {requestParcelPickupDefinition} from "./RequestParcelPickup/definition";
+import {getRequestParcelPickupFieldsDefinition} from "./GetRequestParcelPickupFields/definition";
 
 export const courierShipmentsDefinition: INodeProperties[] = [
 	{
@@ -100,6 +101,12 @@ export const courierShipmentsDefinition: INodeProperties[] = [
 				description: 'The method allows you to request a parcel pickup for previously created shipments. The method sends a parcel pickup request to courier API if the courier API allows it.',
 				action: 'Request a parcel pickup for previously created shipments',
 			},
+			{
+				name: 'Get Request Parcel Pickup Fields',
+				value: CourierShipmentsMethod.GetRequestParcelPickupFields,
+				description: 'The method allows you to retrieve additional fields for a parcel pickup request',
+				action: 'Gets additional fields for a parcel pickup request',
+			},
 		],
 		// default: OrdersMethod.GetOrders.toString(),
 		default: '',
@@ -116,5 +123,6 @@ export const courierShipmentsDefinition: INodeProperties[] = [
 	...getOrderPackagesDefinition,
 	...getCourierPackagesStatusHistoryDefinition,
 	...deleteCourierPackageDefinition,
-	...requestParcelPickupDefinition
+	...requestParcelPickupDefinition,
+	...getRequestParcelPickupFieldsDefinition,
 ];
