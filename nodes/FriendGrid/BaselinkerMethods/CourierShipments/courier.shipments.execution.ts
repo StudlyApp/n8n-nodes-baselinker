@@ -2,6 +2,7 @@ import {IExecuteFunctions} from "n8n-core";
 import {CourierShipmentsMethod} from "../types";
 import zod from "zod";
 import {createPackageExecution} from "./CreatePackage/execution";
+import {createPackageManualExecution} from "./CreatePackageManual/execution";
 
 export async function courierShipmentsExecution(
 	data: IExecuteFunctions,
@@ -92,6 +93,36 @@ export async function courierShipmentsExecution(
 				...schemaAdditionalFields.parse({
 					account_id: additionalFields.account_id,
 					fields: preparedArrayForFields,
+				})
+			}
+		});
+	}
+
+	if (operation === CourierShipmentsMethod.CreatePackageManual) {
+		const schema = zod.object({
+			order_id: zod.number(),
+			courier_code: zod.string(),
+			package_number: zod.string(),
+			pickup_date: zod.number(),
+		});
+
+		const schemaAdditionalFields = zod.object({
+			return_shipment: zod.boolean().nullish(),
+		})
+
+		const additionalFields = data.getNodeParameter('additionalFields', i);
+
+		return await createPackageManualExecution({
+			apiKey: apiKey,
+			input: {
+				...schema.parse({
+					order_id: data.getNodeParameter('order_id', i),
+					courier_code: data.getNodeParameter('courier_code', i),
+					package_number: data.getNodeParameter('package_number', i),
+					pickup_date: data.getNodeParameter('pickup_date', i),
+				}),
+				...schemaAdditionalFields.parse({
+					return_shipment: additionalFields.return_shipment,
 				})
 			}
 		});
