@@ -12,6 +12,7 @@ import {getLabelExecution} from "./GetLabel/execution";
 import {getProtocolExecution} from "./GetProtocol/execution";
 import {getOrderPackagesExecution} from "./GetOrderPackages/execution";
 import {getCourierPackagesStatusHistoryExecution} from "./GetCourierPackagesStatusHistory/execution";
+import {deleteCourierPackageExecution} from "./DeleteCourierPackage/execution";
 
 export async function courierShipmentsExecution(
 	data: IExecuteFunctions,
@@ -370,5 +371,40 @@ export async function courierShipmentsExecution(
 				package_ids: preparedArrayForPackageIDs,
 			})
 		});
+	}
+
+	if (operation === CourierShipmentsMethod.DeleteCourierPackage) {
+		const schema = zod.object({
+			courier_code: zod.string(),
+			package_id: zod.number().nullish(),
+			package_number: zod.string().nullish()
+		});
+
+		const schemaAdditionalFields = zod.object({
+			force_delete: zod.boolean().nullish(),
+		})
+
+		const additionalFields = data.getNodeParameter('additionalFields', i);
+
+		const package_id = data.getNodeParameter('package_id', i);
+		const package_number = data.getNodeParameter('package_number', i);
+
+		if (package_id !== null || package_number !== "") {
+			return await deleteCourierPackageExecution({
+				apiKey: apiKey,
+				input: {
+					...schema.parse({
+						courier_code: data.getNodeParameter('courier_code', i),
+						package_id: data.getNodeParameter('package_id', i),
+						package_number: data.getNodeParameter('package_number', i),
+					}),
+					...schemaAdditionalFields.parse({
+						force_delete: additionalFields.force_delete,
+					})
+				}
+			});
+		} else {
+			throw new Error('🚨 One of optional fields (package_id or package_number) is required!')
+		}
 	}
 }

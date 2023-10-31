@@ -11,6 +11,7 @@ import {getLabelDefinition} from "./GetLabel/definition";
 import {getProtocolDefinition} from "./GetProtocol/definition";
 import {getOrderPackagesDefinition} from "./GetOrderPackages/definition";
 import {getCourierPackagesStatusHistoryDefinition} from "./GetCourierPackagesStatusHistory/definition";
+import {deleteCourierPackageDefinition} from "./DeleteCourierPackage/definition";
 
 export const courierShipmentsDefinition: INodeProperties[] = [
 	{
@@ -86,6 +87,12 @@ export const courierShipmentsDefinition: INodeProperties[] = [
 				description: 'The method allows you to retrieve the history of the status list of the given shipments. Maximum 100 shipments at a time.',
 				action: 'Gets history of the status list of the given shipments',
 			},
+			{
+				name: 'Delete Courier Package',
+				value: CourierShipmentsMethod.DeleteCourierPackage,
+				description: 'The method allows you to delete a previously created shipment. The method removes the shipment from the BaseLinker system and from the courier system if the courier API allows it.',
+				action: 'Remove a previously created shipment',
+			},
 		],
 		// default: OrdersMethod.GetOrders.toString(),
 		default: '',
@@ -101,4 +108,5 @@ export const courierShipmentsDefinition: INodeProperties[] = [
 	...getProtocolDefinition,
 	...getOrderPackagesDefinition,
 	...getCourierPackagesStatusHistoryDefinition,
+	...deleteCourierPackageDefinition,
 ];
