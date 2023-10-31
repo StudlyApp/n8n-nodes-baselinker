@@ -267,7 +267,7 @@ export async function courierShipmentsExecution(
 		const package_id = data.getNodeParameter('package_id', i);
 		const package_number = data.getNodeParameter('package_number', i);
 
-		if ((package_id === undefined && package_number !== undefined) || (package_number === undefined && package_id !== undefined)) {
+		if (package_id !== null || package_number !== "") {
 			return await getLabelExecution({
 				apiKey: apiKey,
 				input: schema.parse({
