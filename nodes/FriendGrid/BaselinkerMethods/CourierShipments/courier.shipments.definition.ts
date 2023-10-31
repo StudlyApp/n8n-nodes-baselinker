@@ -4,6 +4,7 @@ import {Resource, CourierShipmentsMethod} from "../types";
 import {createPackageDefinition} from "./CreatePackage/definition";
 import {createPackageManualDefinition} from "./CreatePackageManual/definition";
 import {getCouriersListDefinition} from "./GetCouriersList/definition";
+import {getCourierFieldsDefinition} from "./GetCourierFields/definition";
 
 export const courierShipmentsDefinition: INodeProperties[] = [
 	{
@@ -37,6 +38,12 @@ export const courierShipmentsDefinition: INodeProperties[] = [
 				description: 'The method allows you to retrieve a list of available couriers',
 				action: 'Gets a list of available couriers',
 			},
+			{
+				name: 'Get Courier Fields',
+				value: CourierShipmentsMethod.GetCourierFields,
+				description: 'The method allows you to retrieve the form fields for creating shipments for the selected courier',
+				action: 'Gets the form fields for creating shipments for the selected courier',
+			},
 		],
 		// default: OrdersMethod.GetOrders.toString(),
 		default: '',
@@ -45,4 +52,5 @@ export const courierShipmentsDefinition: INodeProperties[] = [
 	...createPackageDefinition,
 	...createPackageManualDefinition,
 	...getCouriersListDefinition,
+	...getCourierFieldsDefinition,
 ];

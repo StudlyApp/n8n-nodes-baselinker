@@ -5,6 +5,7 @@ import zod from "zod";
 import {createPackageExecution} from "./CreatePackage/execution";
 import {createPackageManualExecution} from "./CreatePackageManual/execution";
 import {getCouriersListExecution} from "./GetCouriersList/execution";
+import {getCourierFieldsExecution} from "./GetCourierFields/execution";
 
 export async function courierShipmentsExecution(
 	data: IExecuteFunctions,
@@ -133,6 +134,19 @@ export async function courierShipmentsExecution(
 	if (operation === CourierShipmentsMethod.GetCouriersList) {
 		return await getCouriersListExecution({
 			apiKey: apiKey,
+		});
+	}
+
+	if (operation === CourierShipmentsMethod.GetCourierFields) {
+		const schema = zod.object({
+			courier_code: zod.string(),
+		});
+
+		return await getCourierFieldsExecution({
+			apiKey: apiKey,
+			input: schema.parse({
+					courier_code: data.getNodeParameter('courier_code', i),
+				}),
 		});
 	}
 }
