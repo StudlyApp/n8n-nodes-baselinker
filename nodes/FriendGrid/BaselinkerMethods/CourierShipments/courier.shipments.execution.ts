@@ -7,6 +7,7 @@ import {createPackageManualExecution} from "./CreatePackageManual/execution";
 import {getCouriersListExecution} from "./GetCouriersList/execution";
 import {getCourierFieldsExecution} from "./GetCourierFields/execution";
 import {getCourierServicesExecution} from "./GetCourierServices/execution";
+import {getCourierAccountsExecution} from "./GetCourierAccounts/execution";
 
 export async function courierShipmentsExecution(
 	data: IExecuteFunctions,
@@ -239,6 +240,19 @@ export async function courierShipmentsExecution(
 					packages: preparedArrayForPackages,
 				})
 			}
+		});
+	}
+
+	if (operation === CourierShipmentsMethod.GetCourierAccounts) {
+		const schema = zod.object({
+			courier_code: zod.string(),
+		});
+
+		return await getCourierAccountsExecution({
+			apiKey: apiKey,
+			input: schema.parse({
+				courier_code: data.getNodeParameter('courier_code', i),
+			}),
 		});
 	}
 }
